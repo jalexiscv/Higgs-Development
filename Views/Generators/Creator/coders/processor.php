@@ -1,0 +1,106 @@
+<?php
+
+use Config\Database;
+
+$action = "";
+$module = "";
+$component = "";
+$f = service("forms", array("lang" => "Nexus."));
+/** request * */
+$r["client"] = $f->get_Value("client", strtoupper(uniqid()));
+$r["time"] = $f->get_Value("time", service("dates")::get_Time());
+$id = $oid;
+$eid = explode("_", $id);
+$ucf_module = safe_ucfirst($eid[0]);
+$ucf_component = safe_ucfirst($eid[1]);
+$ucf_options = safe_ucfirst(@$eid[2]);
+$slc_module = safe_strtolower($eid[0]);
+$slc_component = safe_strtolower($eid[1]);
+$slc_options = safe_strtolower(@$eid[2]);
+
+if (count($eid) == 3) {
+    $model = "App\\Modules\\{$ucf_module}\\Models\\{$ucf_module}_{$ucf_component}_{$ucf_options}";
+    $path = '/' . $slc_module . '/' . $slc_component . '/' . $slc_options;
+    $namespaced = "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\Creator\\processor.php";
+    $plural = "{$slc_module}-{$slc_component}-{$slc_options}-view-all";
+    $pathfiles = APPPATH . "Modules/{$ucf_module}/Views/{$ucf_component}/{$ucf_options}/_Creator";
+    $ajax = "/{$slc_module}/{$slc_component}/{$slc_options}/ajax/list?time=\".time()";
+} else {
+    $model = "App\\Modules\\{$ucf_module}\\Models\\{$ucf_module}_{$ucf_component}";
+    $path = '/' . $slc_module . '/' . $slc_component;
+    $namespaced = "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\Creator\\processor.php";
+    $plural = "{$slc_module}-{$slc_component}-view-all";
+    $pathfiles = APPPATH . "Modules/{$ucf_module}/Views/{$ucf_component}/_List";
+    $ajax = "/{$slc_module}/{$slc_component}/ajax/list/";
+}
+
+$db = Database::connect("default");
+$fields = $db->getFieldNames($id);
+
+$code = "<?php\n";
+$code .= get_development_code_copyright(array("path" => $namespaced));
+
+$code .= "use Higgs\\Frontend\\Bootstrap\\v5_3_3\\Bootstrap as BS5;\n";
+$code .= "//[Inherited from ModuleController]---------------------------------------------------\n";
+$code .= "// \$authentication  → service('authentication')  App\\Libraries\\Authentication\n";
+$code .= "// \$bootstrap       → service('bootstrap')\n";
+$code .= "// \$dates           → service('Dates')           App\\Libraries\\Dates\n";
+$code .= "// \$strings         → service('strings')         App\\Libraries\\Strings\n";
+$code .= "// \$request         → service('request')\n";
+$code .= "// \$server          → service('server')\n";
+$code .= "// \$parent          → ModuleController instance  (use \$parent->get_Array() for view data)\n";
+$code .= "//[Models]-----------------------------------------------------------------------------\n";
+$code .= "\$f = service(\"forms\",array(\"lang\" => \"{$ucf_module}_{$ucf_component}.\"));\n";
+$code .= "\$model = model(\"App\\Modules\\{$ucf_module}\\Models\\{$ucf_module}_{$ucf_component}\");\n";
+
+$code .= "//[Vars]-----------------------------------------------------------------------------\n";
+
+$code .= "\$d = array(\n";
+foreach ($fields as $field) {
+    if ($field != "created_at" && $field != "updated_at" && $field != "deleted_at") {
+        if ($field == "author") {
+            $code .= "    \"{$field}\" => safe_get_user(),\n";
+        } elseif ($field == "date") {
+            $code .= "    \"{$field}\" => safe_get_date(),\n";
+        } elseif ($field == "time") {
+            $code .= "    \"{$field}\" => safe_get_time(),\n";
+        } else {
+            $code .= "    \"{$field}\" => \$f->get_Value(\"{$field}\"),\n";
+        }
+    }
+}
+$code .= ");\n";
+$code .= "\$row = \$model->find(\$d[\"{$fields[0]}\"]);\n";
+$code .= "\$l[\"back\"]=\$f->get_Value(\"back\");\n";
+$code .= "\$l[\"edit\"]=\"/{$slc_module}/{$slc_component}/edit/{\$d[\"{$fields[0]}\"]}\";\n";
+$code .= "\$asuccess = \"{$slc_module}/{$slc_component}-create-success-message.mp3\";\n";
+$code .= "\$aexist = \"{$slc_module}/{$slc_component}-create-exist-message.mp3\";\n";
+$code .= "if (is_array(\$row)) {\n";
+$code .= "    \$_icon_col = BS5::col(['attributes' => ['class' => 'text-center py-3'], 'content' => BS5::icon(['icon' => 'triangle-exclamation', 'style' => 'duotone', 'size' => '2xl'])]);\n";
+$code .= "    \$_msg_col  = BS5::col(['attributes' => ['class' => 'text-center pb-2'], 'content' => lang(\"{$ucf_module}_{$ucf_component}.create-duplicate-message\")]);\n";
+$code .= "    \$_btn_col  = BS5::col(['attributes' => ['class' => 'text-center pb-3'], 'content' => BS5::button(['content' => lang('App.Continue'), 'variant' => 'warning', 'size' => 'sm', 'attributes' => ['href' => \$l['back']]])]);\n";
+$code .= "    \$_content  = BS5::row(['attributes' => ['class' => 'justify-content-center'], 'content' => \$_icon_col.\$_msg_col.\$_btn_col]);\n";
+$code .= "    \$c = BS5::card([\n";
+$code .= "        'headerTitle' => lang(\"{$ucf_module}_{$ucf_component}.create-duplicate-title\"),\n";
+$code .= "        'headerClass' => 'bg-warning text-dark',\n";
+$code .= "        'content'     => \$_content,\n";
+$code .= "        'attributes'  => ['class' => 'border-warning shadow-sm'],\n";
+$code .= "    ]);\n";
+$code .= "} else {\n";
+$code .= "    \$create = \$model->insert(\$d);\n";
+$code .= "    \$_icon_col = BS5::col(['attributes' => ['class' => 'text-center py-3'], 'content' => BS5::icon(['icon' => 'circle-check', 'style' => 'duotone', 'size' => '2xl'])]);\n";
+$code .= "    \$_msg_col  = BS5::col(['attributes' => ['class' => 'text-center pb-2'], 'content' => sprintf(lang(\"{$ucf_module}_{$ucf_component}.create-success-message\"), \$d['{$fields[0]}'])]);\n";
+$code .= "    \$_btn_col  = BS5::col(['attributes' => ['class' => 'text-center pb-3'], 'content' => BS5::button(['content' => lang('App.Continue'), 'variant' => 'success', 'size' => 'sm', 'attributes' => ['href' => \$l['back']]])]);\n";
+$code .= "    \$_content  = BS5::row(['attributes' => ['class' => 'justify-content-center'], 'content' => \$_icon_col.\$_msg_col.\$_btn_col]);\n";
+$code .= "    \$c = BS5::card([\n";
+$code .= "        'headerTitle' => lang(\"{$ucf_module}_{$ucf_component}.create-success-title\"),\n";
+$code .= "        'headerClass' => 'bg-success text-white',\n";
+$code .= "        'content'     => \$_content,\n";
+$code .= "        'attributes'  => ['class' => 'border-success shadow-sm'],\n";
+$code .= "    ]);\n";
+$code .= "}\n";
+$code .= "echo(\$c);\n";
+$code .= "\$model->invalidateSearchCache();\n";
+$code .= "?>\n";
+echo($code);
+?>

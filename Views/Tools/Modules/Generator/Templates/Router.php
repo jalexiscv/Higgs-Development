@@ -1,0 +1,54 @@
+<?php
+$strings = service("strings");
+/** @var string $module */
+$ucf_module = $strings->get_Ucfirst($module);
+$lc_module = $strings->get_Strtolower($module);
+
+$code = "<?php\n";
+$code .= "\n";
+$code .= "namespace App\Modules\\$ucf_module\Controllers;\n";
+$code .= "\n";
+$code .= "use Higgs\Controller;\n";
+$code .= "\n";
+$code .= "/**\n";
+$code .= "* Clase Router Controller\n";
+$code .= "* Controlador personalizado para implementar un enfoque de enrutamiento \"lazy\".\n";
+$code .= "*/\n";
+$code .= "class Router extends Controller\n";
+$code .= "{\n";
+$code .= "\t\t/**\n";
+$code .= "\t\t * Método para enrutar las solicitudes de manera dinámica\n";
+$code .= "\t\t * Este método toma dos parámetros de la URL, los trata como el nombre del controlador y el método,\n";
+$code .= "\t\t * y luego intenta llamar a ese método del controlador. Si el controlador o el método no existen,\n";
+$code .= "\t\t * se lanza un error 404.\n";
+$code .= "\t\t * @param string \$controller El primer segmento de la URL, tratado como el nombre del controlador.\n";
+$code .= "\t\t * @param string \$method El segundo segmento de la URL, tratado como el nombre del método.\n";
+$code .= "\t\t * @return mixed El resultado de llamar al método del controlador.\n";
+$code .= "\t\t * @throws \Higgs\Exceptions\PageNotFoundException Si el controlador o el método no existen.\n";
+$code .= "\t\t */\n";
+$code .= "\t\tpublic function route(\$controller, \$method)\n";
+$code .= "\t\t{\n";
+$code .= "\t\t\t\t// Convierte los nombres de la URL a la convención de nombres de las clases y los métodos\n";
+$code .= "\t\t\t\t\$module = \"$ucf_module\";\n";
+$code .= "\t\t\t\t\$controller = ucfirst(\$controller);\n";
+$code .= "\t\t\t\t\$method = strtolower(\$method);\n";
+$code .= "\t\t\t\t// Construye el nombre de clase completo con su espacio de nombres\n";
+$code .= "\t\t\t\t\$class = \"\\App\\Modules\\\\{\$module}\\\\Controllers\\\\{\$controller}\";\n";
+$code .= "\t\t\t\t// Verifica si la clase y el método existen\n";
+$code .= "\t\t\t\tif (class_exists(\$class) && method_exists(\$class, \$method)) {\n";
+$code .= "\t\t\t\t\t\t// Si existen, crea una nueva instancia de la clase\n";
+$code .= "\t\t\t\t\t\t\$instance = new \$class;\n";
+$code .= "\t\t\t\t\t\t// Obtiene los argumentos adicionales\n";
+$code .= "\t\t\t\t\t\t\$args = array_slice(func_get_args(), 2);\n";
+$code .= "\t\t\t\t\t\t// Llama al método con los argumentos\n";
+$code .= "\t\t\t\t\t\treturn call_user_func_array([\$instance, \$method], \$args);\n";
+$code .= "\t\t\t\t} else {\n";
+$code .= "\t\t\t\t\t\t// Si no existen, muestra un error 404\n";
+$code .= "\t\t\t\t\t\tthrow \Higgs\Exceptions\PageNotFoundException::forPageNotFound();\n";
+$code .= "\t\t\t\t}\n";
+$code .= "\t\t}\n";
+$code .= "}\n";
+$code .= "\n";
+$code .= "?>\n";
+echo $code;
+?>

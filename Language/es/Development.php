@@ -1,0 +1,26 @@
+<?php
+
+return [
+    'texttophp-label_text' => 'Texto a convertir',
+    'texttophp-help_text' => 'Ingrese texto en cualquier formato y se convertirá a PHP',
+    'texttophp-placeholder_text' => 'Ej: Hola Mundo',
+    "texttophp-label_code" => "Código PHP",
+    "texttophp-help_code" => "Código generado",
+    "texttophp-placeholder_code" => "",
+    "creator-success-title" => "Creador generado exitosamente",
+    "creator-success-text" => "Creador generado con éxito, para continuar con la generación de controladores y vistas presione el boton continuar en la parte inferior de este mensaje.",
+    "editor-success-title" => "Actualizador generado exitosamente",
+    "editor-success-text" => "El actualizador se ha generado con éxito. Para continuar con la generación de controladores y vistas, por favor, presione el botón 'Continuar' situado en la parte inferior de este mensaje.",
+    "deleter-success-title" => "Eliminador generado exitosamente",
+    "deleter-success-text" => "Eliminador generado con éxito, para continuar con la generación de controladores y vistas presione el boton continuar en la parte inferior de este mensaje.",
+    "lang-success-title" => "Archivo de lenguaje generado exitosamente",
+    "lang-success-text" => "Archivo de lenguaje generado con éxito, para continuar con la generación de controladores y vistas presione el boton continuar en la parte inferior de este mensaje.",
+    "model--success-title" => "Modelo creado con éxito, para continuar con la generación de controladores y vistas presione el boton continuar en la parte inferior de este mensaje",
+    "viewer-success-title" => "Visualizador creado exitosamente",
+    "viewer-success-text" => "Visualizador creado con éxito, para continuar con la generación de controladores y vistas presione el boton continuar en la parte inferior de este mensaje",
+    "lister-success-title" => "Listador creado exitosamente",
+    "lister-success-text" => "Listador creado con éxito, para continuar con la generación de controladores y vistas presione el boton continuar en la parte inferior de este mensaje",
+    "lister-warning-title" => "Listador creado exitosamente",
+    "lister-warning-text" => "Listador creado con éxito, para continuar con la generación de controladores y vistas presione el boton continuar en la parte inferior de este mensaje",
+];
+?>
