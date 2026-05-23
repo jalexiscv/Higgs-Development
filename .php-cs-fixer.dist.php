@@ -1,28 +1,33 @@
 <?php
 
-declare(strict_types=1);
-
-use PhpCsFixer\Config;
-use PhpCsFixer\Finder;
-
-return (new Config())
-    ->setRiskyAllowed(false)
-    ->setRules([
-        '@auto' => true
+$finder = PhpCsFixer\Finder::create()
+    ->in([
+        __DIR__,
     ])
-    // 💡 by default, Fixer looks for `*.php` files excluding `./vendor/` - here, you can groom this config
-    ->setFinder(
-        (new Finder())
-            // 💡 root folder to check
-            ->in(__DIR__)
-            // 💡 additional files, eg bin entry file
-            // ->append([__DIR__.'/bin-entry-file'])
-            // 💡 folders to exclude, if any
-            // ->exclude([/* ... */])
-            // 💡 path patterns to exclude, if any
-            // ->notPath([/* ... */])
-            // 💡 extra configs
-            // ->ignoreDotFiles(false) // true by default in v3, false in v4 or future mode
-            // ->ignoreVCS(true) // true by default
-    )
-;
+    ->name('*.php')
+    ->exclude([
+        'vendor',
+        'node_modules',
+        '.git',
+    ])
+    ->notName([
+        '*.blade.php',
+        '_ide_helper.php',
+    ]);
+
+$rules = [
+    '@PSR12'                 => true,
+    'array_syntax'           => ['syntax' => 'short'],
+    'no_unused_imports'      => true,
+    'single_quote'           => true,
+    'no_extra_blank_lines'   => true,
+    'trailing_comma_in_multiline' => ['elements' => ['arrays']],
+    'trim_array_spaces'      => true,
+    'whitespace_after_comma_in_array' => true,
+];
+
+return (new PhpCsFixer\Config())
+    ->setRules($rules)
+    ->setFinder($finder)
+    ->setUsingCache(true)
+    ->setCacheFile(__DIR__ . '/.php-cs-fixer.cache');

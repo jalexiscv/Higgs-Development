@@ -9,11 +9,11 @@ $code = "<?php\n";
 $code .= get_development_code_copyright(['path' => $namespacedFile]);
 
 $code .= "use Higgs\\Frontend\\Bootstrap\\v5_3_3\\Bootstrap as BS5;\n";
-$code .= "\$f = service(\"forms\",array(\"lang\" => \"{$g->ucf_module}_{$g->ucf_component}.\"));\n";
+$code .= "\$f = service('forms',['lang' => \"{$g->ucf_module}_{$g->ucf_component}.\"]);\n";
 
 $code .= "//[Request]-----------------------------------------------------------------------------\n";
 foreach ($fields as $field) {
-    $code .= "//\$f->set_ValidationRule(\"{$field}\",\"trim|required\");\n";
+    $code .= "//\$f->set_ValidationRule('{$field}','trim|required');\n";
 }
 $code .= "//[Validation]-----------------------------------------------------------------------------\n";
 $code .= "if (\$f->run_Validation()) {\n";
@@ -26,7 +26,7 @@ $code .= "    \$_content   = BS5::col(['attributes' => ['class' => 'justify-cont
 $code .= "    \$c = BS5::card([\n";
 $code .= "        'headerTitle' => lang('App.validator-errors-title'),\n";
 $code .= "        'headerClass' => 'bg-danger text-white',\n";
-$code .= "        'content'     => [\"htmlContent\" =>\$_content,],\n";
+$code .= "        'content'     => ['htmlContent' =>\$_content,],\n";
 $code .= "        'attributes'  => ['class' => 'border-danger shadow-sm'],\n";
 $code .= "    ]);\n";
 $code .= "    \$c .= view(\$component.'\\\\form', \$parent->get_Array());\n";

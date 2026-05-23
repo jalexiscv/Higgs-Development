@@ -14,7 +14,7 @@ $code .= "if (\$authentication->get_LoggedIn()) {\n";
 $code .= "    \$_icon = (string)BS5::icon(['icon' => 'ban', 'style' => 'duotone', 'size' => '4x']);\n";
 $code .= "    \$_body = '<div class=\"text-center py-3\">' . \$_icon . '</div>'\n";
 $code .= "        . '<p class=\"text-center pb-2\">' . lang('App.Access-denied-message') . '</p>';\n";
-$code .= "    \$_permissions=\"<p class=\\\"text-center pb-2\\\">Permisos requeridos: \".implode(\" - \",\$permissions).\"</p>\";\n";
+$code .= "    \$_permissions=\"<p class=\\\"text-center pb-2\\\">Permisos requeridos: \".implode(' - ',\$permissions).\"</p>\";\n";
 $code .= "    \$_continue = BS5::button(['content' => lang('App.Continue'), 'variant' => 'danger', 'size' => 'md', 'attributes' => ['href' => \$continue]]);\n";
 $code .= "    \$card = BS5::card([\n";
 $code .= "        'header' => [\n";

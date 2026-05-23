@@ -18,24 +18,24 @@ $code .= "// \$request         → service('request')\n";
 $code .= "// \$server          → service('server')\n";
 $code .= "// \$parent          → ModuleController instance  (use \$parent->get_Array() for view data)\n";
 $code .= "//[Models]-----------------------------------------------------------------------------\n";
-$code .= "\$f = service(\"forms\",array(\"lang\" => \"{$g->ucf_module}_{$g->ucf_component}.\"));\n";
+$code .= "\$f = service('forms',['lang' => \"{$g->ucf_module}_{$g->ucf_component}.\"]);\n";
 $code .= "\$model = model(\"App\\Modules\\{$g->ucf_module}\\Models\\{$g->ucf_module}_{$g->ucf_component}\");\n";
 
-$code .= "\$d = array(\n";
+$code .= "\$d = [\n";
 foreach ($fields as $field) {
     if ($field != 'created_at' && $field != 'updated_at' && $field != 'deleted_at') {
         if ($field == 'author') {
-            $code .= "    \"{$field}\" => safe_get_user(),\n";
+            $code .= "    '{$field}' => safe_get_user(),\n";
         } else {
-            $code .= "    \"{$field}\" => \$f->get_Value(\"{$field}\"),\n";
+            $code .= "    '{$field}' => \$f->get_Value('{$field}'),\n";
         }
     }
 }
-$code .= ");\n";
+$code .= "];\n";
 $code .= "//[Elements]-----------------------------------------------------------------------------\n";
-$code .= "\$row = \$model->find(\$d[\"{$fields[0]}\"]);\n";
-$code .= "\$l[\"back\"]=\$f->get_Value(\"back\");\n";
-$code .= "\$l[\"edit\"]=\"/{$g->slc_module}/{$g->slc_component}/edit/{\$d[\"{$fields[0]}\"]}\";\n";
+$code .= "\$row = \$model->find(\$d['{$fields[0]}']);\n";
+$code .= "\$l['back']=\$f->get_Value('back');\n";
+$code .= "\$l['edit']=\"/{$g->slc_module}/{$g->slc_component}/edit/{\$d['{$fields[0]}']}\";\n";
 $code .= "\$asuccess = \"{$g->slc_module}/{$g->slc_component}-edit-success-message.mp3\";\n";
 $code .= "\$anoexist = \"{$g->slc_module}/{$g->slc_component}-edit-noexist-message.mp3\";\n";
 $code .= COMMENT_HR_BUILD;

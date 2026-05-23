@@ -40,21 +40,21 @@ $code .= "class {$g->classname} extends CachedModel5\n";
 $code .= "\t {\n";
 $code .= "\t\t protected \$table = \"{$oid}\";\n";
 $code .= "\t\t protected \$primaryKey = \"{$g->fields[0]}\";\n";
-$code .= "\t\t protected \$returnType = \"array\";\n";
+$code .= "\t\t protected \$returnType = 'array';\n";
 $code .= "\t\t protected \$useSoftDeletes = true;\n";
 $code .= "\t\t protected \$allowedFields = [\n";
 foreach ($g->fields as $field) {
-    $code .= "\t\t\t \"{$field}\",\n";
+    $code .= "\t\t\t '{$field}',\n";
 }
 $code .= "\t\t ];\n";
 $code .= "\t\t protected \$useTimestamps = true;\n";
-$code .= "\t\t protected \$createdField = \"created_at\";\n";
-$code .= "\t\t protected \$updatedField = \"updated_at\";\n";
-$code .= "\t\t protected \$deletedField = \"deleted_at\";\n";
+$code .= "\t\t protected \$createdField = 'created_at';\n";
+$code .= "\t\t protected \$updatedField = 'updated_at';\n";
+$code .= "\t\t protected \$deletedField = 'deleted_at';\n";
 $code .= "\t\t protected \$validationRules = [];\n";
 $code .= "\t\t protected \$validationMessages = [];\n";
 $code .= "\t\t protected \$skipValidation = false;\n";
-$code .= "\t\t protected \$DBGroup = \"authentication\";//default\n";
+$code .= "\t\t protected \$DBGroup = 'authentication';//default\n";
 $code .= "\t\t protected \$version = '1.0.1';\n";
 $code .= "\t\t protected \$cache_time = 60;\n";
 $code .= "\t\t protected array \$cacheTags = ['table:{$oid}'];\n";
