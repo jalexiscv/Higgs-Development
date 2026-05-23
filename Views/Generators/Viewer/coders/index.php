@@ -1,51 +1,17 @@
 <?php
 
-use Config\Database;
+include __DIR__ . '/_shared.php';
 
-$action = "";
-$module = "";
-$component = "";
-$f = service("forms", array("lang" => "Nexus."));
-/** request * */
-$r["client"] = $f->get_Value("client", strtoupper(uniqid()));
-$r["time"] = $f->get_Value("time", service("dates")::get_Time());
-$id = $oid;
-$eid = explode("_", $id);
-$ucf_module = safe_ucfirst($eid[0]);
-$ucf_component = safe_ucfirst($eid[1]);
-$ucf_options = safe_ucfirst(@$eid[2]);
-$slc_module = safe_strtolower($eid[0]);
-$slc_component = safe_strtolower($eid[1]);
-$slc_options = safe_strtolower(@$eid[2]);
-
-if (count($eid) == 3) {
-    $model = "App\\Modules\\{$ucf_module}\\Models\\{$ucf_module}_{$ucf_component}_{$ucf_options}";
-    $path = '/' . $slc_module . '/' . $slc_component . '/' . $slc_options;
-    $namespaced = "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\Editor\\index.php";
-    $singular = "{$slc_module}-{$slc_component}-{$slc_options}-view";
-    $plural = "{$slc_module}-{$slc_component}-{$slc_options}-view-all";
-    $pathfiles = APPPATH . "Modules/{$ucf_module}/Views/{$ucf_component}/{$ucf_options}/View";
-    $ajax = "/{$slc_module}/{$slc_component}/{$slc_options}/ajax/list?time=\".time()";
-} else {
-    $model = "App\\Modules\\{$ucf_module}\\Models\\{$ucf_module}_{$ucf_component}";
-    $path = '/' . $slc_module . '/' . $slc_component;
-    $namespaced = "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\Editor\\index.php";
-    $singular = "{$slc_module}-{$slc_component}-view";
-    $plural = "{$slc_module}-{$slc_component}-view-all";
-    $pathfiles = APPPATH . "Modules/{$ucf_module}/Views/{$ucf_component}/View";
-    $ajax = "/{$slc_module}/{$slc_component}/ajax/list/";
-}
-
-$db = Database::connect("default");
-$fields = $db->getFieldNames($id);
-
+$singular = "{$g->slc_module}-{$g->slc_component}-view";
+$plural = "{$g->slc_module}-{$g->slc_component}-view-all";
+$namespacedFile = $g->namespaced . "index.php";
 
 $code = "<?php\n";
-$code .= get_development_code_copyright(array("path" => $namespaced));
+$code .= get_development_code_copyright(array("path" => $namespacedFile));
 $code .= COMMENT_HR_VARS;
 $code .= COMMENT_MODULECONTROLER_VARS;
 $code .= "\$data = \$parent->get_Array();\n";
-$code .= "\$data['model']=model(\"App\\Modules\\{$ucf_module}\\Models\\{$ucf_module}_{$ucf_component}\");\n";
+$code .= "\$data['model']=model(\"App\\Modules\\{$g->ucf_module}\\Models\\{$g->ucf_module}_{$g->ucf_component}\");\n";
 $code .= "\$data['permissions'] = array('singular' => '{$singular}', \"plural\" =>'{$plural}');\n";
 $code .= "\$singular = \$authentication->has_Permission(\$data['permissions']['singular']);\n";
 $code .= "\$plural = \$authentication->has_Permission(\$data['permissions']['plural']);\n";
@@ -68,5 +34,5 @@ $code .= "\t\t\$json = array('breadcrumb' => view(\$breadcrumb, \$data), 'main' 
 $code .= "}\n";
 $code .= "echo(json_encode(\$json));\n";
 $code .= "?>\n";
+
 echo($code);
-?>

@@ -1,51 +1,11 @@
 <?php
-/*
- * Copyright (c) 2021. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
- * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
- * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
- * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
- * Vestibulum commodo. Ut rhoncus gravida arcu.
- */
 
-use Config\Database;
+include __DIR__ . '/_shared.php';
 
-$action = "";
-$module = "";
-$component = "";
-$f = service("forms", array("lang" => "Nexus."));
-/** request * */
-$r["client"] = $f->get_Value("client", strtoupper(uniqid()));
-$r["time"] = $f->get_Value("time", service("dates")::get_Time());
-$id = $oid;
-$eid = explode("_", $id);
-$ucf_module = safe_ucfirst($eid[0]);
-$ucf_component = safe_ucfirst($eid[1]);
-$ucf_options = safe_ucfirst(@$eid[2]);
-$slc_module = safe_strtolower($eid[0]);
-$slc_component = safe_strtolower($eid[1]);
-$slc_options = safe_strtolower(@$eid[2]);
-
-if (count($eid) == 3) {
-    $model = "App\\Modules\\{$ucf_module}\\Models\\{$ucf_module}_{$ucf_component}_{$ucf_options}";
-    $path = '/' . $slc_module . '/' . $slc_component . '/' . $slc_options;
-    $namespaced = "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\List\\json.php";
-    $plural = "{$slc_module}-{$slc_component}-{$slc_options}-view-all";
-    $pathfiles = APPPATH . "Modules/{$ucf_module}/Views/{$ucf_component}/{$ucf_options}/_List";
-    $ajax = "/{$slc_module}/{$slc_component}/{$slc_options}/ajax/list?time=\".time()";
-} else {
-    $model = "App\\Modules\\{$ucf_module}\\Models\\{$ucf_module}_{$ucf_component}";
-    $path = '/' . $slc_module . '/' . $slc_component;
-    $namespaced = "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\List\\json.php";
-    $plural = "{$slc_module}-{$slc_component}-view-all";
-    $pathfiles = APPPATH . "Modules/{$ucf_module}/Views/{$ucf_component}/_List";
-    $ajax = "/{$slc_module}/{$slc_component}/ajax/list/";
-}
-
-$db = Database::connect("default");
-$fields = $db->getFieldNames($id);
+$fields = $g->fields;
 
 $code = "<?php\n";
-$code .= get_development_code_copyright(array("path" => $namespaced));
+$code .= get_development_code_copyright(array("path" => $g->namespaced . "json.php"));
 $code .= "//[Inherited from ModuleController]---------------------------------------------------\n";
 $code .= "// \$authentication  → service('authentication')  App\\Libraries\\Authentication\n";
 $code .= "// \$bootstrap       → service('bootstrap')\n";
@@ -56,7 +16,7 @@ $code .= "// \$server          → service('server')\n";
 $code .= "// \$parent          → ModuleController instance  (use \$parent->get_Array() for view data)\n";
 
 $code .= "//[Models]---------------------------------------------------------------------------------------------------------------\n";
-$code .= "\$model = model('{$model}');\n";
+$code .= "\$model = model('{$g->model}');\n";
 
 $code .= "//[Requests]------------------------------------------------------------------------------------------------------------\n";
 $code .= "\$columns = \$request->getGet(\"columns\");\n";
@@ -72,7 +32,7 @@ $code .= "//\$sql=\$model->getLastQuery()->getQuery();\n";
 
 $code .= "//[Asignations]---------------------------------------------------------------------------------------------------------\n";
 $code .= "\$data = array();\n";
-$code .= "\$component = '/{$slc_module}/{$slc_component}';\n";
+$code .= "\$component = '/{$g->slc_module}/{$g->slc_component}';\n";
 $code .= "foreach (\$list as \$item) {\n";
 $code .= "\t//[Buttons]---------------------------------------------------------------------------------------------------------\n";
 $code .= "\t\$viewer = \"{\$component}/view/{\$item[\"{$fields["0"]}\"]}\";\n";
@@ -107,4 +67,3 @@ $code .= "echo(json_encode(\$json));\n";
 $code .= "?>\n\n\n\n";
 
 echo($code);
-?>

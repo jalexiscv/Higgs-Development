@@ -1,47 +1,15 @@
 <?php
 
-use Config\Database;
-
-$action = "";
-$module = "";
-$component = "";
-$f = service("forms", array("lang" => "Nexus."));
-/** request * */
-$r["client"] = $f->get_Value("client", strtoupper(uniqid()));
-$r["time"] = $f->get_Value("time", service("dates")::get_Time());
-$id = $oid;
-$eid = explode("_", $id);
-$ucf_module = safe_ucfirst($eid[0]);
-$ucf_component = safe_ucfirst($eid[1]);
-$ucf_options = safe_ucfirst(@$eid[2]);
-$slc_module = safe_strtolower($eid[0]);
-$slc_component = safe_strtolower($eid[1]);
-$slc_options = safe_strtolower(@$eid[2]);
-
-if (count($eid) == 3) {
-    $model = "App\\Modules\\{$ucf_module}\\Models\\{$ucf_module}_{$ucf_component}_{$ucf_options}";
-    $path = '/' . $slc_module . '/' . $slc_component . '/' . $slc_options;
-    $namespaced = "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\Creator\\deny.php";
-    $plural = "{$slc_module}-{$slc_component}-{$slc_options}-view-all";
-    $pathfiles = APPPATH . "Modules/{$ucf_module}/Views/{$ucf_component}/{$ucf_options}/_List";
-    $ajax = "/{$slc_module}/{$slc_component}/{$slc_options}/ajax/list?time=\".time()";
-} else {
-    $model = "App\\Modules\\{$ucf_module}\\Models\\{$ucf_module}_{$ucf_component}";
-    $path = '/' . $slc_module . '/' . $slc_component;
-    $namespaced = "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\Creator\\deny.php";
-    $plural = "{$slc_module}-{$slc_component}-view-all";
-    $pathfiles = APPPATH . "Modules/{$ucf_module}/Views/{$ucf_component}/_List";
-    $ajax = "/{$slc_module}/{$slc_component}/ajax/list/";
-}
+include __DIR__ . '/_shared.php';
 
 $code = "<?php\n";
 $code .= "/** @var \$permissions array que contiene los permisos que el usuario no posee */\n";
 $code .= "/** @var \$authentication \\App\\Libraries\\Authentication */\n";
 $code .= "\n";
-$code .= get_development_code_copyright(array("path" => $namespaced));
+$code .= get_development_code_copyright(array("path" => $g->namespaced . "deny.php"));
 $code .= "use Higgs\\Frontend\\Bootstrap\\v5_3_3\\Bootstrap as BS5;\n";
 $code .= "\n";
-$code .= "\$continue = \"/{$slc_module}/{$slc_component}/list/\".lpk();\n";
+$code .= "\$continue = \"/{$g->slc_module}/{$g->slc_component}/list/\".lpk();\n";
 $code .= "if (\$authentication->get_LoggedIn()) {\n";
 $code .= "    \$_icon = (string)BS5::icon(['icon' => 'ban', 'style' => 'duotone', 'size' => '4x']);\n";
 $code .= "    \$_body = '<div class=\"text-center py-3\">' . \$_icon . '</div>'\n";
@@ -91,4 +59,3 @@ $code .= "}\n";
 $code .= "echo(\$card);\n";
 $code .= "?>";
 echo($code);
-?>

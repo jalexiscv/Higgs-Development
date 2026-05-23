@@ -1,59 +1,30 @@
 <?php
 
-use Config\Database;
+include __DIR__ . '/_shared.php';
 
-$action = "";
-$module = "";
-$component = "";
-$f = service("forms", array("lang" => "Nexus."));
-/** request * */
-$r["client"] = $f->get_Value("client", strtoupper(uniqid()));
-$r["time"] = $f->get_Value("time", service("dates")::get_Time());
-$id = $oid;
-$eid = explode("_", $id);
-$ucf_module = safe_ucfirst($eid[0]);
-$ucf_component = safe_ucfirst($eid[1]);
-$ucf_options = safe_ucfirst(@$eid[2]);
-$slc_module = safe_strtolower($eid[0]);
-$slc_component = safe_strtolower($eid[1]);
-$slc_options = safe_strtolower(@$eid[2]);
+$singular = $g->has_options
+    ? "{$g->slc_module}-{$g->slc_component}-{$g->slc_options}-edit"
+    : "{$g->slc_module}-{$g->slc_component}-edit";
+$plural = $g->has_options
+    ? "{$g->slc_module}-{$g->slc_component}-{$g->slc_options}-edit-all"
+    : "{$g->slc_module}-{$g->slc_component}-edit-all";
 
-if (count($eid) == 3) {
-    $model = "App\\Modules\\{$ucf_module}\\Models\\{$ucf_module}_{$ucf_component}_{$ucf_options}";
-    $path = '/' . $slc_module . '/' . $slc_component . '/' . $slc_options;
-    $namespaced = "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\Editor\\index.php";
-    $singular = "{$slc_module}-{$slc_component}-{$slc_options}-edit";
-    $plural = "{$slc_module}-{$slc_component}-{$slc_options}-edit-all";
-    $pathfiles = APPPATH . "Modules/{$ucf_module}/Views/{$ucf_component}/{$ucf_options}/_Editor";
-    $ajax = "/{$slc_module}/{$slc_component}/{$slc_options}/ajax/list?time=\".time()";
-} else {
-    $model = "App\\Modules\\{$ucf_module}\\Models\\{$ucf_module}_{$ucf_component}";
-    $path = '/' . $slc_module . '/' . $slc_component;
-    $namespaced = "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\Editor\\index.php";
-    $singular = "{$slc_module}-{$slc_component}-edit";
-    $plural = "{$slc_module}-{$slc_component}-edit-all";
-    $pathfiles = APPPATH . "Modules/{$ucf_module}/Views/{$ucf_component}/_Editor";
-    $ajax = "/{$slc_module}/{$slc_component}/ajax/list/";
-}
-
-$db = Database::connect("default");
-$fields = $db->getFieldNames($id);
 $code = "<?php\n";
-$code .= get_development_code_copyright(array("path" => $namespaced));
+$code .= get_development_code_copyright(array("path" => $g->namespaced . "index.php"));
 $code .= COMMENT_HR_VARS;
 $code .= COMMENT_MODULECONTROLER_VARS;
 $code .= "\$data = \$parent->get_Array();\n";
-$code .= "\$data['model'] = model(\"App\\Modules\\{$ucf_module}\\Models\\{$ucf_module}_{$ucf_component}\");\n";
+$code .= "\$data['model'] = model(\"App\\Modules\\{$g->ucf_module}\\Models\\{$g->ucf_module}_{$g->ucf_component}\");\n";
 $code .= "\$data['permissions'] = array('singular' => '{$singular}', \"plural\" =>'{$plural}');\n";
 $code .= "\$singular = \$authentication->has_Permission(\$data['permissions']['singular']);\n";
 $code .= "\$plural = \$authentication->has_Permission(\$data['permissions']['plural']);\n";
 $code .= "\$author= \$data['model']->getAuthority(\$oid,safe_get_user());\n";
 $code .= "\$authority= (\$singular&&\$author)?true:false;\n";
 $code .= "\$submited = \$request->getPost(\"submited\");\n";
-$code .= "\$breadcrumb = \$component . '\breadcrumb';\n";
-$code .= "\$validator = \$component . '\\validator';\n";
-$code .= "\$form = \$component . '\\form';\n";
-$code .= "\$deny = \$component . '\\deny';\n";
+$code .= "\$breadcrumb = \$component . '\\breadcrumb';\n";
+$code .= "\$validator = \$component . '\\\\validator';\n";
+$code .= "\$form = \$component . '\\\\form';\n";
+$code .= "\$deny = \$component . '\\\\deny';\n";
 $code .= COMMENT_HR_BUILD;
 $code .= "if (\$plural||\$authority) {\n";
 $code .= "\t\t if (!empty(\$submited)) {\n";
@@ -82,4 +53,3 @@ $code .= "}\n";
 $code .= "echo(json_encode(\$json));\n";
 $code .= "?>\n";
 echo($code);
-?>

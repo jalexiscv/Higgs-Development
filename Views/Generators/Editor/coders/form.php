@@ -1,82 +1,14 @@
 <?php
 
-use Config\Database;
+include __DIR__ . '/_shared.php';
 
-/**
- * █ ---------------------------------------------------------------------------------------------------------------------
- * █ ░FRAMEWORK                                  2024-02-05 03:52:50
- * █ ░█▀▀█ █▀▀█ █▀▀▄ █▀▀ ░█─░█ ─▀─ █▀▀▀ █▀▀▀ █▀▀ [App\Modules\Organization\Views\Plans\Editor\form.php]
- * █ ░█─── █──█ █──█ █▀▀ ░█▀▀█ ▀█▀ █─▀█ █─▀█ ▀▀█ Copyright 2023 - CloudEngine S.A.S., Inc. <admin@cgine.com>
- * █ ░█▄▄█ ▀▀▀▀ ▀▀▀─ ▀▀▀ ░█─░█ ▀▀▀ ▀▀▀▀ ▀▀▀▀ ▀▀▀ Para obtener información completa sobre derechos de autor y licencia,
- * █                                             consulte la LICENCIA archivo que se distribuyó con este código fuente.
- * █ ---------------------------------------------------------------------------------------------------------------------
- * █ EL SOFTWARE SE PROPORCIONA -TAL CUAL-, SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O
- * █ IMPLÍCITA, INCLUYENDO PERO NO LIMITADO A LAS GARANTÍAS DE COMERCIABILIDAD,
- * █ APTITUD PARA UN PROPÓSITO PARTICULAR Y NO INFRACCIÓN. EN NINGÚN CASO SERÁ
- * █ LOS AUTORES O TITULARES DE LOS DERECHOS DE AUTOR SERÁN RESPONSABLES DE CUALQUIER
- * █ RECLAMO, DAÑOS U OTROS RESPONSABILIDAD, YA SEA EN UNA ACCIÓN DE CONTRATO,
- * █ AGRAVIO O DE OTRO MODO, QUE SURJA DESDE, FUERA O EN RELACIÓN CON EL SOFTWARE
- * █ O EL USO U OTROS NEGOCIACIONES EN EL SOFTWARE.
- * █ ---------------------------------------------------------------------------------------------------------------------
- * █ @Author Jose Alexis Correa Valencia <jalexiscv@gmail.com>
- * █ @link https://www.codehiggs.com
- * █ @Version 1.5.0 @since PHP 7, PHP 8
- * █ ---------------------------------------------------------------------------------------------------------------------
- * █ Datos recibidos desde el controlador - @ModuleController
- * █ ---------------------------------------------------------------------------------------------------------------------
- * █ @var object $parent Trasferido desde el controlador
- * * █ @var object $authentication Trasferido desde el controlador
- * * █ @var object $request Trasferido desde el controlador
- * * █ @var object $dates Trasferido desde el controlador
- * * █ @var string $component Trasferido desde el controlador
- * * █ @var string $view Trasferido desde el controlador
- * * █ @var string $oid Trasferido desde el controlador
- * * █ @var string $views Trasferido desde el controlador
- * * █ @var string $prefix Trasferido desde el controlador
- * * █ @var array $data Trasferido desde el controlador
- * * █ @var object $model Modelo de datos utilizado en la vista y trasferido desde el index
- * █ ---------------------------------------------------------------------------------------------------------------------
- **/
 $strings = service("strings");
-
-$action = "";
-$module = "";
-$component = "";
-$f = service("forms", array("lang" => "Nexus."));
-/** request * */
-$r["client"] = $f->get_Value("client", strtoupper(uniqid()));
-$r["time"] = $f->get_Value("time", service("dates")::get_Time());
-$id = $oid;
-$eid = explode("_", $id);
-$ucf_module = safe_ucfirst($eid[0]);
-$ucf_component = safe_ucfirst($eid[1]);
-$ucf_options = safe_ucfirst(@$eid[2]);
-$slc_module = safe_strtolower($eid[0]);
-$slc_component = safe_strtolower($eid[1]);
-$slc_options = safe_strtolower(@$eid[2]);
-$sucf_component = $strings->removePluralEnding($ucf_component);
-
-if (count($eid) == 3) {
-    $model = "App\\Modules\\{$ucf_module}\\Models\\{$ucf_module}_{$ucf_component}_{$ucf_options}";
-    $path = '/' . $slc_module . '/' . $slc_component . '/' . $slc_options;
-    $namespaced = "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\Editor\\form.php";
-    $plural = "{$slc_module}-{$slc_component}-{$slc_options}-view-all";
-    $pathfiles = APPPATH . "Modules/{$ucf_module}/Views/{$ucf_component}/{$ucf_options}/_Editor";
-    $ajax = "/{$slc_module}/{$slc_component}/{$slc_options}/ajax/list?time=\".time()";
-} else {
-    $model = "App\\Modules\\{$ucf_module}\\Models\\{$ucf_module}_{$ucf_component}";
-    $path = '/' . $slc_module . '/' . $slc_component;
-    $namespaced = "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\Editor\\form.php";
-    $plural = "{$slc_module}-{$slc_component}-view-all";
-    $pathfiles = APPPATH . "Modules/{$ucf_module}/Views/{$ucf_component}/_List";
-    $ajax = "/{$slc_module}/{$slc_component}/ajax/list/";
-}
-
-$db = Database::connect("default");
-$fields = $db->getFieldNames($id);
+$sucf_component = $strings->removePluralEnding($g->ucf_component);
+$fields = $g->fields;
+$namespacedFile = $g->namespaced . "form.php";
 
 $code = "<?php\n";
-$code .= get_development_code_copyright(array("path" => $namespaced));
+$code .= get_development_code_copyright(array("path" => $namespacedFile));
 
 $code .= "use Higgs\\Frontend\\Bootstrap\\v5_3_3\\Bootstrap as BS5;\n";
 $code .= "//[Inherited from ModuleController]---------------------------------------------------\n";
@@ -88,10 +20,10 @@ $code .= "// \$request         → service('request')\n";
 $code .= "// \$server          → service('server')\n";
 $code .= "// \$parent          → ModuleController instance  (use \$parent->get_Array() for view data)\n";
 $code .= "\$server = service(\"server\");\n";
-$code .= "\$f = service(\"forms\",array(\"lang\" => \"{$ucf_module}_{$ucf_component}.\"));\n";
+$code .= "\$f = service(\"forms\",array(\"lang\" => \"{$g->ucf_module}_{$g->ucf_component}.\"));\n";
 
 $code .= COMMENT_HR_MODELS;
-$code .= "//\$model = model(\"App\\Modules\\{$ucf_module}\\Models\\{$ucf_module}_{$ucf_component}\");\n";
+$code .= "//\$model = model(\"App\\Modules\\{$g->ucf_module}\\Models\\{$g->ucf_module}_{$g->ucf_component}\");\n";
 
 $code .= COMMENT_HR_VARS;
 
@@ -139,12 +71,11 @@ $code .= "\$f->groups[\"gz\"] = \$f->get_Buttons(array(\"fields\"=>\$f->fields[\
 
 $code .= COMMENT_HR_BUILD;
 $code .= "\$card = BS5::card([\n";
-$code .= "    'headerTitle'   => lang(\"{$ucf_module}_{$ucf_component}.edit-title\"),\n";
+$code .= "    'headerTitle'   => lang(\"{$g->ucf_module}_{$g->ucf_component}.edit-title\"),\n";
 $code .= "    'headerButtons' => [BS5::button(['content' => BS5::icon(['icon' => 'arrow-left', 'style' => 'duotone']), 'variant' => 'secondary', 'size' => 'sm', 'attributes' => ['href' => \$back]])],\n";
-$code .= "    'content'       => \$f,\n";
+$code .= "    'content'       => [\"htmlContent\" =>\$f,],\n";
 $code .= "]);\n";
 $code .= "echo(\$card);\n";
 $code .= "?>\n";
 
 echo($code);
-?>
