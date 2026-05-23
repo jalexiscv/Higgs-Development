@@ -2,6 +2,7 @@
 
 | # | Fecha | Descripción breve | Detalle |
 |---|-------|-------------------|---------|
+| 7 | 2026-05-23 | Limpiar headers ASCII art de 74 archivos en todo el proyecto | [Ver detalle](2026-05-23_limpieza_ascii_headers.md) |
 | 6 | 2026-05-23 | Normalizar salida generada por coders: short arrays + single quotes en código producido | [Ver detalle](2026-05-23_normalizacion_salida_coders.md) |
 | 5 | 2026-05-23 | Aplicar PHP CS Fixer (PSR-12 + short arrays + single quotes) a todo el módulo | [Ver detalle](2026-05-23_php_cs_fixer.md) |
 | 4 | 2026-05-23 | Limpieza del generador Controller: headers, DB innecesaria, breadcrumb, language key | [Ver detalle](2026-05-23_limpieza_generador_controller.md) |

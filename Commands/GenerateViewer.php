@@ -1,24 +1,17 @@
 <?php
 
 /**
- * █ ---------------------------------------------------------------------------------------------------------------------
- * █ ░FRAMEWORK
- * █ ░█▀▀█ █▀▀█ █▀▀▄ █▀▀ ░█─░█ ─▀─ █▀▀▀ █▀▀▀ █▀▀ [App\Modules\Development\Commands\GenerateViewer]
- * █ ░█─── █──█ █──█ █▀▀ ░█▀▀█ ▀█▀ █─▀█ █─▀█ ▀▀█ Copyright 2023 - CloudEngine S.A.S., Inc. <admin@cgine.com>
- * █ ░█▄▄█ ▀▀▀▀ ▀▀▀─ ▀▀▀ ░█─░█ ▀▀▀ ▀▀▀▀ ▀▀▀▀ ▀▀▀
- * █ ---------------------------------------------------------------------------------------------------------------------
- * █ Genera las 6 vistas del tipo "View/" a partir del nombre de una tabla de base de datos,
- * █ replicando el comportamiento del generador web Development/Generators/Viewer.
- * █ ---------------------------------------------------------------------------------------------------------------------
- * █ Uso:
- * █   php spark development:generate-viewer <tabla> [--database=nombre_bd] [--force]
- * █
- * █ Ejemplos:
- * █   php spark development:generate-viewer access_events
- * █   php spark development:generate-viewer sie_pensums_prerequisites --database=higgs_sie
- * █   php spark development:generate-viewer access_attendances --force
- * █ ---------------------------------------------------------------------------------------------------------------------
- **/
+ * Genera las 6 vistas del tipo "View/" a partir del nombre de una tabla de base de datos,
+ * replicando el comportamiento del generador web Development/Generators/Viewer.
+ *
+ * Uso:
+ *   php spark development:generate-viewer <tabla> [--database=nombre_bd] [--force]
+ *
+ * Ejemplos:
+ *   php spark development:generate-viewer access_events
+ *   php spark development:generate-viewer sie_pensums_prerequisites --database=higgs_sie
+ *   php spark development:generate-viewer access_attendances --force
+ */
 
 namespace App\Modules\Development\Commands;
 

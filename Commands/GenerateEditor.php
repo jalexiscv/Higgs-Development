@@ -1,10 +1,10 @@
 <?php
 
 /**
- * █ Genera las vistas Edit/ (index, form, processor, validator, breadcrumb, deny)
- * █ Equivalente al generador web Development/Generators/Editor
- * █ Uso: php spark development:generate-editor <tabla> [--database=nombre_bd] [--force]
- **/
+ * Genera las vistas Edit/ (index, form, processor, validator, breadcrumb, deny)
+ * Equivalente al generador web Development/Generators/Editor
+ * Uso: php spark development:generate-editor <tabla> [--database=nombre_bd] [--force]
+ */
 
 namespace App\Modules\Development\Commands;
 

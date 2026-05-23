@@ -1,10 +1,10 @@
 <?php
 
 /**
- * █ Genera las vistas Create/ (index, form, processor, validator, breadcrumb, deny)
- * █ Equivalente al generador web Development/Generators/Creator
- * █ Uso: php spark development:generate-creator <tabla> [--database=nombre_bd] [--force]
- **/
+ * Genera las vistas Create/ (index, form, processor, validator, breadcrumb, deny)
+ * Equivalente al generador web Development/Generators/Creator
+ * Uso: php spark development:generate-creator <tabla> [--database=nombre_bd] [--force]
+ */
 
 namespace App\Modules\Development\Commands;
 
