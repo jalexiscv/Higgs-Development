@@ -20,6 +20,8 @@ return [
     "viewer-success-text" => "Visualizador creado con éxito, para continuar con la generación de controladores y vistas presione el boton continuar en la parte inferior de este mensaje",
     "lister-success-title" => "Listador creado exitosamente",
     "lister-success-text" => "Listador creado con éxito, para continuar con la generación de controladores y vistas presione el boton continuar en la parte inferior de este mensaje",
+    "controller-success-title" => "Controlador generado exitosamente",
+    "controller-success-text" => "Controlador generado con éxito, para continuar con la generación de controladores y vistas presione el boton continuar en la parte inferior de este mensaje.",
     "lister-warning-title" => "Listador creado exitosamente",
     "lister-warning-text" => "Listador creado con éxito, para continuar con la generación de controladores y vistas presione el boton continuar en la parte inferior de este mensaje",
 ];

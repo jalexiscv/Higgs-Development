@@ -20,5 +20,3 @@ $g->namespaced = "App\\Modules\\{$g->ucf_module}\\Controllers\\_{$g->ucf_compone
 $g->mkdir = APPPATH . "Modules/{$g->ucf_module}/Controllers";
 $g->pathfile = APPPATH . "Modules/{$g->ucf_module}/Controllers/_{$g->ucf_component}.php";
 
-$db = \Config\Database::connect("default");
-$g->fields = $db->getFieldNames($oid);

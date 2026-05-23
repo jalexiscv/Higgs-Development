@@ -23,12 +23,12 @@ try {
 
 $_icon = (string)BS5::icon(['icon' => 'circle-check', 'style' => 'duotone', 'size' => '4x']);
 $_body = '<div class="text-center py-3">' . $_icon . '</div>'
-    . '<p class="text-center pb-2">' . lang("Development.model--success-title") . '</p>'
+    . '<p class="text-center pb-2">' . lang("Development.controller-success-text") . '</p>'
     . '<div class="text-center pb-3">' . (string)BS5::button(['content' => lang('App.Continue'), 'variant' => 'success', 'size' => 'md', 'attributes' => ['href' => base_url("/development/generators/list/" . lpk())]]) . '</div>';
 $_content = (string)BS5::col(['attributes' => ['class' => 'text-center'], 'htmlContent' => $_body]);
 $c = BS5::card([
     'header' => [
-        'title' => lang("Development.model--success-title"),
+        'title' => lang("Development.controller-success-title"),
         'class' => 'bg-success border-success text-white'
     ],
     'content' => [

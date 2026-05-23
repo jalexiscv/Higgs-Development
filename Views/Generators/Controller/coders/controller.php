@@ -26,14 +26,14 @@ $code .= "\t//\"{$g->slc_module}-{$g->slc_component}-delete\"=>\"\$views\\{$g->u
 
 $code .= "\n";
 $code .= "\t//[{$g->ucf_component}]----------------------------------------------------------------------------------------\n";
-$code .= "\t//\t\t\t\t\t\t\"{$g->slc_module}-{$g->slc_component}-access\",\n";
-$code .= "\t//\t\t\t\t\t\t\"{$g->slc_module}-{$g->slc_component}-view\",\n";
-$code .= "\t//\t\t\t\t\t\t\"{$g->slc_module}-{$g->slc_component}-view-all\",\n";
-$code .= "\t//\t\t\t\t\t\t\"{$g->slc_module}-{$g->slc_component}-create\",\n";
-$code .= "\t//\t\t\t\t\t\t\"{$g->slc_module}-{$g->slc_component}-edit\",\n";
-$code .= "\t//\t\t\t\t\t\t\"{$g->slc_module}-{$g->slc_component}-edit-all\",\n";
-$code .= "\t//\t\t\t\t\t\t\"{$g->slc_module}-{$g->slc_component}-delete\",\n";
-$code .= "\t//\t\t\t\t\t\t\"{$g->slc_module}-{$g->slc_component}-delete-all\",\n";
+$code .= "\t//\"{$g->slc_module}-{$g->slc_component}-access\",\n";
+$code .= "\t//\"{$g->slc_module}-{$g->slc_component}-view\",\n";
+$code .= "\t//\"{$g->slc_module}-{$g->slc_component}-view-all\",\n";
+$code .= "\t//\"{$g->slc_module}-{$g->slc_component}-create\",\n";
+$code .= "\t//\"{$g->slc_module}-{$g->slc_component}-edit\",\n";
+$code .= "\t//\"{$g->slc_module}-{$g->slc_component}-edit-all\",\n";
+$code .= "\t//\"{$g->slc_module}-{$g->slc_component}-delete\",\n";
+$code .= "\t//\"{$g->slc_module}-{$g->slc_component}-delete-all\",\n";
 
 $code .= "\n";
 
