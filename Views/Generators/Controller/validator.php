@@ -1,77 +1,27 @@
 <?php
 
-/*
- * -----------------------------------------------------------------------------
- *  ╔═╗╔╗╔╔═╗╔═╗╦╔╗ ╦  ╔═╗
- *  ╠═╣║║║╚═╗╚═╗║╠╩╗║  ║╣  [FRAMEWORK]
- *  ╩ ╩╝╚╝╚═╝╚═╝╩╚═╝╩═╝╚═╝
- * -----------------------------------------------------------------------------
- * Copyright 2021 - Higgs Bigdata S.A.S., Inc. <admin@Higgs.com>
- * Este archivo es parte de Higgs Bigdata Framework 7.1
- * Para obtener información completa sobre derechos de autor y licencia, consulte
- * la LICENCIA archivo que se distribuyó con este código fuente.
- * -----------------------------------------------------------------------------
- * EL SOFTWARE SE PROPORCIONA -TAL CUAL-, SIN GARANTÍA DE NINGÚN TIPO, EXPRESA O
- * IMPLÍCITA, INCLUYENDO PERO NO LIMITADO A LAS GARANTÍAS DE COMERCIABILIDAD,
- * APTITUD PARA UN PROPÓSITO PARTICULAR Y NO INFRACCIÓN. EN NINGÚN CASO SERÁ
- * LOS AUTORES O TITULARES DE LOS DERECHOS DE AUTOR SERÁN RESPONSABLES DE CUALQUIER
- * RECLAMO, DAÑOS U OTROS RESPONSABILIDAD, YA SEA EN UNA ACCIÓN DE CONTRATO,
- * AGRAVIO O DE OTRO MODO, QUE SURJA DESDE, FUERA O EN RELACIÓN CON EL SOFTWARE
- * O EL USO U OTROS NEGOCIACIONES EN EL SOFTWARE.
- * -----------------------------------------------------------------------------
- * @Author Jose Alexis Correa Valencia <jalexiscv@gmail.com>
- * @link https://www.Higgs.com
- * @Version 1.5.0
- * @since PHP 7, PHP 8
- * -----------------------------------------------------------------------------
- * Datos recibidos desde el controlador - @ModuleController
- * -----------------------------------------------------------------------------
- * @Authentication
- * @request
- * @dates
- * @view
- * @oid
- * @component
- * @views
- * @prefix
- * @parent
- * -----------------------------------------------------------------------------
- */
+use Higgs\Frontend\Bootstrap\v5_3_3\Bootstrap as BS5;
 
 $f = service("forms", array("lang" => "Nexus."));
-/*
- * -----------------------------------------------------------------------------
- * [Request]
- * -----------------------------------------------------------------------------
-*/
+
 $f->set_ValidationRule("pathfile", "trim|required");
 $f->set_ValidationRule("mkdir", "trim|required");
-$f->set_ValidationRule("relative", "trim|required");
 $f->set_ValidationRule("uri_save", "trim|required");
 $f->set_ValidationRule("code", "trim|required");
-/*
- * -----------------------------------------------------------------------------
- * [Validation]
- * -----------------------------------------------------------------------------
-*/
+
 if ($f->run_Validation()) {
     $c = view($component . '\processor', $parent->get_Array());
 } else {
-    $c = $bootstrap->get_Card('validator', array(
-        'class' => 'card-danger',
-        'icon' => 'fa-duotone fa-triangle-exclamation',
-        'text-class' => 'text-center',
-        'text' => lang("App.create-errors-message"),
-        'errors' => $f->validation->listErrors(),
-        'footer-class' => 'text-center',
-        'voice' => "app/form-errors-message.mp3",
-    ));
+    $_icon_col  = BS5::row(['attributes' => ['class' => 'text-center py-3'], 'content' => BS5::icon(['icon' => 'triangle-exclamation', 'style' => 'duotone', 'size' => '2xl'])]);
+    $_msg_col   = BS5::row(['attributes' => ['class' => 'text-center pb-2'], 'htmlContent' => lang('App.validator-errors-message')]);
+    $_errors_col= BS5::row(['attributes' => ['class' => 'pb-2'], 'htmlContent' => $f->validation->listErrors()]);
+    $_content   = BS5::col(['attributes' => ['class' => 'justify-content-center'], 'htmlContent' => $_icon_col.$_msg_col.$_errors_col]);
+    $c = BS5::card([
+        'headerTitle' => lang('App.validator-errors-title'),
+        'headerClass' => 'bg-danger text-white',
+        'content'     => ["htmlContent" => $_content,],
+        'attributes'  => ['class' => 'border-danger shadow-sm'],
+    ]);
 }
-/*
- * -----------------------------------------------------------------------------
- * [Build]
- * -----------------------------------------------------------------------------
-*/
-echo($c);
 
-?>
+echo($c);

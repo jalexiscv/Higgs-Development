@@ -15,18 +15,31 @@ $cbreadcrumb = $f->get_Value("cbreadcrumb");
 
 $files = new Files();
 $files->mkDir($pathfiles);
-$files->open("{$pathfiles}/index.php", "writeOnly")->write(urldecode($cindex));
-@chmod("{$pathfiles}/index.php", 0664);
-$files->open("{$pathfiles}/deny.php", "writeOnly")->write(urldecode($cdeny));
-@chmod("{$pathfiles}/deny.php", 0664);
-$files->open("{$pathfiles}/form.php", "writeOnly")->write(urldecode($cform));
-@chmod("{$pathfiles}/form.php", 0664);
-$files->open("{$pathfiles}/processor.php", "writeOnly")->write(urldecode($cprocessor));
-@chmod("{$pathfiles}/processor.php", 0664);
-$files->open("{$pathfiles}/validator.php", "writeOnly")->write(urldecode($cvalidator));
-@chmod("{$pathfiles}/validator.php", 0664);
-$files->open("{$pathfiles}/breadcrumb.php", "writeOnly")->write(urldecode($cbreadcrumb));
-@chmod("{$pathfiles}/breadcrumb.php", 0664);
+try {
+    chmod($pathfiles, 0775);
+} catch (\Throwable $e) {
+    // Ignore permission errors when chmod fails
+}
+
+// Archivos a crear con permisos editables
+$generatedFiles = [
+    "{$pathfiles}/index.php" => urldecode($cindex),
+    "{$pathfiles}/deny.php" => urldecode($cdeny),
+    "{$pathfiles}/form.php" => urldecode($cform),
+    "{$pathfiles}/processor.php" => urldecode($cprocessor),
+    "{$pathfiles}/validator.php" => urldecode($cvalidator),
+    "{$pathfiles}/breadcrumb.php" => urldecode($cbreadcrumb),
+];
+
+// Escribir archivos y asignar permisos de escritura
+foreach ($generatedFiles as $filepath => $content) {
+    $files->open($filepath, "writeOnly")->write($content);
+    try {
+        chmod($filepath, 0664);
+    } catch (\Throwable $e) {
+        // Ignore permission errors when chmod fails
+    }
+}
 //[Processing]----------------------------------------------------------------------------------------------------------
 $c = $bootstrap->get_Card('success', array(
     'class' => 'card-success',

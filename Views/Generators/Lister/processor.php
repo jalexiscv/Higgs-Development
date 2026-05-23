@@ -59,12 +59,31 @@ $cbreadcrumb = $f->get_Value("cbreadcrumb");
 
 $files = new Files();
 $files->mkDir($pathfiles);
-$files->open("{$pathfiles}/index.php", "writeOnly")->write(urldecode($cindex));
-$files->open("{$pathfiles}/deny.php", "writeOnly")->write(urldecode($cdeny));
-$files->open("{$pathfiles}/grid.php", "writeOnly")->write(urldecode($cgrid));
-//$files->open("{$pathfiles}/table.php", "writeOnly")->write(urldecode($ctable));
-//$files->open("{$pathfiles}/json.php", "writeOnly")->write(urldecode($cjson));
-$files->open("{$pathfiles}/breadcrumb.php", "writeOnly")->write(urldecode($cbreadcrumb));
+
+// Archivos a crear con permisos editables
+$generatedFiles = [
+    "{$pathfiles}/index.php" => urldecode($cindex),
+    "{$pathfiles}/deny.php" => urldecode($cdeny),
+    "{$pathfiles}/grid.php" => urldecode($cgrid),
+    "{$pathfiles}/breadcrumb.php" => urldecode($cbreadcrumb),
+];
+
+// Asignar permisos al directorio
+try {
+    chmod($pathfiles, 0775);
+} catch (\Throwable $e) {
+    // Ignore permission errors when chmod fails
+}
+
+// Escribir archivos y asignar permisos de escritura
+foreach ($generatedFiles as $filepath => $content) {
+    $files->open($filepath, "writeOnly")->write($content);
+    try {
+        chmod($filepath, 0664);
+    } catch (\Throwable $e) {
+        // Ignore permission errors when chmod fails
+    }
+}
 //$c = ("<b>Archivo creado</b>: {$relative}");
 /*
  * -----------------------------------------------------------------------------

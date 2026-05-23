@@ -59,12 +59,31 @@ $cbreadcrumb = $f->get_Value("cbreadcrumb");
 
 $files = new Files();
 $files->mkDir($pathfiles);
-$files->open("{$pathfiles}/index.php", "writeOnly")->write(urldecode($cindex));
-$files->open("{$pathfiles}/deny.php", "writeOnly")->write(urldecode($cdeny));
-$files->open("{$pathfiles}/form.php", "writeOnly")->write(urldecode($cform));
-$files->open("{$pathfiles}/processor.php", "writeOnly")->write(urldecode($cprocessor));
-$files->open("{$pathfiles}/validator.php", "writeOnly")->write(urldecode($cvalidator));
-$files->open("{$pathfiles}/breadcrumb.php", "writeOnly")->write(urldecode($cbreadcrumb));
+try {
+    chmod($pathfiles, 0775);
+} catch (\Throwable $e) {
+    // Ignore permission errors when chmod fails
+}
+
+// Archivos a crear con permisos editables
+$generatedFiles = [
+    "{$pathfiles}/index.php" => urldecode($cindex),
+    "{$pathfiles}/deny.php" => urldecode($cdeny),
+    "{$pathfiles}/form.php" => urldecode($cform),
+    "{$pathfiles}/processor.php" => urldecode($cprocessor),
+    "{$pathfiles}/validator.php" => urldecode($cvalidator),
+    "{$pathfiles}/breadcrumb.php" => urldecode($cbreadcrumb),
+];
+
+// Escribir archivos y asignar permisos de escritura
+foreach ($generatedFiles as $filepath => $content) {
+    $files->open($filepath, "writeOnly")->write($content);
+    try {
+        chmod($filepath, 0664);
+    } catch (\Throwable $e) {
+        // Ignore permission errors when chmod fails
+    }
+}
 
 $c = $bootstrap->get_Card('success', array(
     'class' => 'card-success',

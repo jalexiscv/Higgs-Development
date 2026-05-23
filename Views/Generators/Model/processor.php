@@ -1,40 +1,40 @@
 <?php
 
-use App\Libraries\Files;
+use Higgs\Frontend\Bootstrap\v5_3_3\Bootstrap as BS5;
 
-$bootstrap = service("bootstrap");
 $f = service("forms", array("lang" => "Nexus."));
-$model = model("App\Models\Application_Clients");
-//[Request]-------------------------------------------------------------------------------------------------------------
+
 $pathfile = $f->get_Value("pathfile");
 $mkdir = $f->get_Value("mkdir");
-$relative = $f->get_Value("relative");
 $code = $f->get_Value("code");
-$files = new Files();
+
+$files = new \App\Libraries\Files();
 $files->mkDir($mkdir);
-$files->open($pathfile, "writeOnly")->write($code);
-@chmod($pathfile, 0664);
-//[Processing]----------------------------------------------------------------------------------------------------------
-if (isset($row["client"])) {
-    $c = $bootstrap->get_Card('warning', array(
-        'class' => 'card-warning',
-        'icon' => 'fa-duotone fa-triangle-exclamation',
-        'text-class' => 'text-center',
-        'text' => lang("Development.model-warning-title"),
-        'footer-class' => 'text-center',
-        'footer-continue' => base_url("/development/generators/list/" . lpk()),
-        'voice' => "development/model-create-warning-message.mp3",
-    ));
-} else {
-    $c = $bootstrap->get_Card('success', array(
-        'class' => 'card-success',
-        'icon' => 'fa-duotone fa-triangle-exclamation',
-        'text-class' => 'text-center',
-        'text' => lang("Development.model--success-title"),
-        'footer-class' => 'text-center',
-        'footer-continue' => base_url("/development/generators/list/" . lpk()),
-        'voice' => "development/model-success-message.mp3",
-    ));
+try {
+    chmod($mkdir, 0775);
+} catch (\Throwable $e) {
 }
+$files->open($pathfile, "writeOnly")->write($code);
+try {
+    chmod($pathfile, 0664);
+} catch (\Throwable $e) {
+}
+
+$_icon = (string)BS5::icon(['icon' => 'circle-check', 'style' => 'duotone', 'size' => '4x']);
+$_body = '<div class="text-center py-3">' . $_icon . '</div>'
+    . '<p class="text-center pb-2">' . lang("Development.model--success-title") . '</p>'
+    . '<div class="text-center pb-3">' . (string)BS5::button(['content' => lang('App.Continue'), 'variant' => 'success', 'size' => 'md', 'attributes' => ['href' => base_url("/development/generators/list/" . lpk())]]) . '</div>';
+$_content = (string)BS5::col(['attributes' => ['class' => 'text-center'], 'htmlContent' => $_body]);
+$c = BS5::card([
+    'header' => [
+        'title' => lang("Development.model--success-title"),
+        'class' => 'bg-success border-success text-white'
+    ],
+    'content' => [
+        'htmlContent' => $_content,
+        'class' => 'bg-success text-white'
+    ],
+    'attributes' => ['class' => 'border-success shadow-sm'],
+]);
+
 echo($c);
-?>

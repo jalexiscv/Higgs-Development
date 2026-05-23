@@ -1,4 +1,5 @@
 <?php
+
 /** @var $permissions array que contiene los permisos que el usuario no posee */
 /** @var $authentication \App\Libraries\Authentication */
 
@@ -52,4 +53,3 @@ if ($authentication->get_LoggedIn()) {
     ]);
 }
 echo($card);
-?>
