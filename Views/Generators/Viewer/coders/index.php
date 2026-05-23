@@ -4,10 +4,10 @@ include __DIR__ . '/_shared.php';
 
 $singular = "{$g->slc_module}-{$g->slc_component}-view";
 $plural = "{$g->slc_module}-{$g->slc_component}-view-all";
-$namespacedFile = $g->namespaced . "index.php";
+$namespacedFile = $g->namespaced . 'index.php';
 
 $code = "<?php\n";
-$code .= get_development_code_copyright(array("path" => $namespacedFile));
+$code .= get_development_code_copyright(['path' => $namespacedFile]);
 $code .= COMMENT_HR_VARS;
 $code .= COMMENT_MODULECONTROLER_VARS;
 $code .= "\$data = \$parent->get_Array();\n";

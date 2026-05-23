@@ -10,7 +10,7 @@ $plural = $g->has_options
     : "{$g->slc_module}-{$g->slc_component}-edit-all";
 
 $code = "<?php\n";
-$code .= get_development_code_copyright(array("path" => $g->namespaced . "index.php"));
+$code .= get_development_code_copyright(['path' => $g->namespaced . 'index.php']);
 $code .= COMMENT_HR_VARS;
 $code .= COMMENT_MODULECONTROLER_VARS;
 $code .= "\$data = \$parent->get_Array();\n";

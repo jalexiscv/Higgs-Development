@@ -40,22 +40,21 @@
 
 use App\Libraries\Files;
 
-$bootstrap = service("bootstrap");
-$f = service("forms", array("lang" => "Nexus."));
+$bootstrap = service('bootstrap');
+$f = service('forms', ['lang' => 'Nexus.']);
 $model = model("App\Models\Application_Clients");
 /*
  * -----------------------------------------------------------------------------
  * [Request]
  * -----------------------------------------------------------------------------
 */
-$pathfiles = $f->get_Value("pathfiles");
-$cindex = $f->get_Value("cindex");
-$cdeny = $f->get_Value("cdeny");
+$pathfiles = $f->get_Value('pathfiles');
+$cindex = $f->get_Value('cindex');
+$cdeny = $f->get_Value('cdeny');
 //$ctable = $f->get_Value("ctable");
 //$cjson = $f->get_Value("cjson");
-$cgrid = $f->get_Value("cgrid");
-$cbreadcrumb = $f->get_Value("cbreadcrumb");
-
+$cgrid = $f->get_Value('cgrid');
+$cbreadcrumb = $f->get_Value('cbreadcrumb');
 
 $files = new Files();
 $files->mkDir($pathfiles);
@@ -77,7 +76,7 @@ try {
 
 // Escribir archivos y asignar permisos de escritura
 foreach ($generatedFiles as $filepath => $content) {
-    $files->open($filepath, "writeOnly")->write($content);
+    $files->open($filepath, 'writeOnly')->write($content);
     try {
         chmod($filepath, 0664);
     } catch (\Throwable $e) {
@@ -91,30 +90,29 @@ foreach ($generatedFiles as $filepath => $content) {
  * -----------------------------------------------------------------------------
 */
 //$row = $model->find($d["client"]);
-if (isset($row["client"])) {
-    $c = $bootstrap->get_Card('warning', array(
+if (isset($row['client'])) {
+    $c = $bootstrap->get_Card('warning', [
         'class' => 'card-warning',
         'icon' => 'fa-duotone fa-triangle-exclamation',
         'text-class' => 'text-center',
-        "title" => lang("Development.lister-warning-title"),
-        'text' => lang("Development.lister-warning-text"),
+        'title' => lang('Development.lister-warning-title'),
+        'text' => lang('Development.lister-warning-text'),
         'footer-class' => 'text-center',
-        'footer-continue' => base_url("/development/generators/list/" . lpk()),
-        'voice' => "development/lister-create-warning-message.mp3",
-    ));
+        'footer-continue' => base_url('/development/generators/list/' . lpk()),
+        'voice' => 'development/lister-create-warning-message.mp3',
+    ]);
 } else {
     //$create = $model->insert($d);
     //
-    $c = $bootstrap->get_Card('success', array(
+    $c = $bootstrap->get_Card('success', [
         'class' => 'card-success',
         'icon' => 'fa-duotone fa-triangle-exclamation',
         'text-class' => 'text-center',
-        "title" => lang("Development.lister-success-title"),
-        'text' => lang("Development.lister-success-text"),
+        'title' => lang('Development.lister-success-title'),
+        'text' => lang('Development.lister-success-text'),
         'footer-class' => 'text-center',
-        'footer-continue' => base_url("/development/generators/list/" . lpk()),
-        'voice' => "development/lister-success-message.mp3",
-    ));
+        'footer-continue' => base_url('/development/generators/list/' . lpk()),
+        'voice' => 'development/lister-success-message.mp3',
+    ]);
 }
 echo($c);
-?>

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright (c) 2021. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
  * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
@@ -13,8 +14,6 @@ use App\Controllers\ModuleController;
 
 class Development extends ModuleController
 {
-
-
     public function __construct()
     {
         parent::__construct();
@@ -32,13 +31,12 @@ class Development extends ModuleController
         return (redirect()->to($url));
     }
 
-    public function home(string $rnd = "index")
+    public function home(string $rnd = 'index')
     {
         $this->oid = null;
         $this->prefix = "{$this->prefix}-home";
         return (view($this->viewer, $this->get_Array()));
     }
-
 
     public function denied(string $rnd = null): string
     {
@@ -54,7 +52,4 @@ class Development extends ModuleController
         return (view($this->viewer, $this->get_Array()));
     }
 
-
 }
-
-?>

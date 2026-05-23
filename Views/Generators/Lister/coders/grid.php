@@ -11,7 +11,7 @@ $code .= "use Higgs\\Frontend\\Bootstrap\\v5_3_3\\Interface\\Button;\n";
 $code .= "use Higgs\\Frontend\\Bootstrap\\v5_3_3\\Interface\\Card;\n";
 $code .= "use Higgs\\Frontend\\Bootstrap\\v5_3_3\\Interface\\Alert;\n";
 $code .= "\n";
-$code .= get_development_code_copyright(array("path" => $g->namespaced . "grid.php"));
+$code .= get_development_code_copyright(['path' => $g->namespaced . 'grid.php']);
 $code .= COMMENT_MODULECONTROLER_VARS;
 $code .= COMMENT_HR_MODELS;
 $code .= "\$m{$g->slc_component} = model('{$g->model}');\n";

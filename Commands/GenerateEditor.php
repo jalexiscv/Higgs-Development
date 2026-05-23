@@ -36,9 +36,14 @@ class GenerateEditor extends BaseCommand
         $force    = false;
 
         foreach ($_SERVER['argv'] ?? [] as $arg) {
-            if (!is_string($arg)) continue;
-            if (strpos($arg, '--database=') === 0) $database = trim(substr($arg, 11), '"\'');
-            elseif ($arg === '--force') $force = true;
+            if (!is_string($arg)) {
+                continue;
+            }
+            if (strpos($arg, '--database=') === 0) {
+                $database = trim(substr($arg, 11), '"\'');
+            } elseif ($arg === '--force') {
+                $force = true;
+            }
         }
 
         if (empty($table)) {
@@ -82,12 +87,17 @@ class GenerateEditor extends BaseCommand
         }
 
         $db = Database::connect('default');
-        if (!$db->tableExists($table)) { CLI::error("La tabla '{$table}' no existe."); return EXIT_ERROR; }
+        if (!$db->tableExists($table)) {
+            CLI::error("La tabla '{$table}' no existe.");
+            return EXIT_ERROR;
+        }
         $fields = $db->getFieldNames($table);
         CLI::write('Campos: ' . implode(', ', $fields), 'white');
         CLI::newLine();
 
-        if (!is_dir($pathfiles)) mkdir($pathfiles, 0755, true);
+        if (!is_dir($pathfiles)) {
+            mkdir($pathfiles, 0755, true);
+        }
 
         $files = [
             'index.php'      => $this->buildIndex($ucf_module, $ucf_component, $ucf_options, $slc_module, $slc_component, $slc_options, $singular, $plural, $is_triple),
@@ -102,7 +112,10 @@ class GenerateEditor extends BaseCommand
             $filepath = "{$pathfiles}/{$filename}";
             if (file_exists($filepath) && !$force) {
                 $answer = CLI::prompt("  '{$filename}' ya existe. ¿Sobreescribir?", ['y', 'n']);
-                if ($answer !== 'y') { CLI::write("  → Saltando {$filename}", 'yellow'); continue; }
+                if ($answer !== 'y') {
+                    CLI::write("  → Saltando {$filename}", 'yellow');
+                    continue;
+                }
             }
             file_put_contents($filepath, $content);
             CLI::write("  ✓ {$filename}", 'green');
@@ -115,9 +128,15 @@ class GenerateEditor extends BaseCommand
     }
 
     protected function buildIndex(
-        string $ucf_module, string $ucf_component, ?string $ucf_options,
-        string $slc_module, string $slc_component, ?string $slc_options,
-        string $singular, string $plural, bool $is_triple
+        string $ucf_module,
+        string $ucf_component,
+        ?string $ucf_options,
+        string $slc_module,
+        string $slc_component,
+        ?string $slc_options,
+        string $singular,
+        string $plural,
+        bool $is_triple
     ): string {
         $namespaced = $is_triple
             ? "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\Edit\\index.php"
@@ -170,9 +189,15 @@ class GenerateEditor extends BaseCommand
     }
 
     protected function buildForm(
-        string $ucf_module, string $ucf_component, ?string $ucf_options,
-        string $slc_module, string $slc_component, ?string $slc_options,
-        string $sucf_component, array $fields, bool $is_triple
+        string $ucf_module,
+        string $ucf_component,
+        ?string $ucf_options,
+        string $slc_module,
+        string $slc_component,
+        ?string $slc_options,
+        string $sucf_component,
+        array $fields,
+        bool $is_triple
     ): string {
         $namespaced = $is_triple
             ? "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\Edit\\form.php"
@@ -190,28 +215,36 @@ class GenerateEditor extends BaseCommand
         $c .= COMMENT_MODULECONTROLER_VARS;
         $c .= "\$row= \$model->get{$sucf_component}(\$oid);\n";
         foreach ($fields as $field) {
-            if ($field === 'author') $c .= "\$r[\"{$field}\"] = \$f->get_Value(\"{$field}\",safe_get_user());\n";
-            elseif ($field === 'date') $c .= "\$r[\"{$field}\"] = \$f->get_Value(\"{$field}\",service(\"dates\")::get_Date());\n";
-            elseif ($field === 'time') $c .= "\$r[\"{$field}\"] = \$f->get_Value(\"{$field}\",service(\"dates\")::get_Time());\n";
-            else $c .= "\$r[\"{$field}\"] = \$f->get_Value(\"{$field}\",\$row[\"{$field}\"]);\n";
+            if ($field === 'author') {
+                $c .= "\$r[\"{$field}\"] = \$f->get_Value(\"{$field}\",safe_get_user());\n";
+            } elseif ($field === 'date') {
+                $c .= "\$r[\"{$field}\"] = \$f->get_Value(\"{$field}\",service(\"dates\")::get_Date());\n";
+            } elseif ($field === 'time') {
+                $c .= "\$r[\"{$field}\"] = \$f->get_Value(\"{$field}\",service(\"dates\")::get_Time());\n";
+            } else {
+                $c .= "\$r[\"{$field}\"] = \$f->get_Value(\"{$field}\",\$row[\"{$field}\"]);\n";
+            }
         }
         $c .= "\$back=\$f->get_Value(\"back\",\$server->get_Referer());\n";
         $c .= COMMENT_HR_FIELDS;
         $c .= "\$f->add_HiddenField(\"back\",\$back);\n";
         foreach ($fields as $field) {
-            if ($field === 'author') $c .= "\$f->add_HiddenField(\"author\",\$r[\"author\"]);\n";
-            else $c .= "\$f->fields[\"{$field}\"] = \$f->get_FieldText(\"{$field}\", array(\"value\" => \$r[\"{$field}\"],\"proportion\"=>\"col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12\"));\n";
+            if ($field === 'author') {
+                $c .= "\$f->add_HiddenField(\"author\",\$r[\"author\"]);\n";
+            } else {
+                $c .= "\$f->fields[\"{$field}\"] = \$f->get_FieldText(\"{$field}\", array(\"value\" => \$r[\"{$field}\"],\"proportion\"=>\"col-xl-4 col-lg-4 col-md-4 col-sm-12 col-12\"));\n";
+            }
         }
         $c .= "\$f->fields[\"cancel\"]=\$f->get_Cancel(\"cancel\", array(\"href\" =>\$back,\"text\" =>lang(\"App.Cancel\"),\"type\"=>\"secondary\",\"proportion\" =>\"col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 padding-right\"));\n";
         $c .= "\$f->fields[\"submit\"] =\$f->get_Submit(\"submit\", array(\"value\" =>lang(\"App.Edit\"),\"proportion\" =>\"col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 padding-left\"));\n";
         $c .= COMMENT_HR_GROUPS;
         $skipped = ['author', 'created_at', 'updated_at', 'deleted_at'];
-        $visible  = array_values(array_filter($fields, fn($f) => !in_array($f, $skipped)));
+        $visible  = array_values(array_filter($fields, fn ($f) => !in_array($f, $skipped)));
         $chunks   = array_chunk($visible, 3);
         $grupo = 0;
         foreach ($chunks as $chunk) {
             $grupo++;
-            $fields_code = implode('.', array_map(fn($f) => "\$f->fields[\"{$f}\"]", $chunk));
+            $fields_code = implode('.', array_map(fn ($f) => "\$f->fields[\"{$f}\"]", $chunk));
             $c .= "\$f->groups[\"g{$grupo}\"]=\$f->get_Group(array(\"legend\"=>\"\",\"fields\"=>({$fields_code})));\n";
         }
         $c .= COMMENT_HR_BUTTONS;
@@ -229,9 +262,14 @@ class GenerateEditor extends BaseCommand
     }
 
     protected function buildProcessor(
-        string $ucf_module, string $ucf_component, ?string $ucf_options,
-        string $slc_module, string $slc_component, ?string $slc_options,
-        array $fields, bool $is_triple
+        string $ucf_module,
+        string $ucf_component,
+        ?string $ucf_options,
+        string $slc_module,
+        string $slc_component,
+        ?string $slc_options,
+        array $fields,
+        bool $is_triple
     ): string {
         $namespaced = $is_triple
             ? "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\Edit\\processor.php"
@@ -247,8 +285,11 @@ class GenerateEditor extends BaseCommand
         $c .= "\$d = array(\n";
         foreach ($fields as $field) {
             if (!in_array($field, ['created_at', 'updated_at', 'deleted_at'])) {
-                if ($field === 'author') $c .= "    \"{$field}\" => safe_get_user(),\n";
-                else $c .= "    \"{$field}\" => \$f->get_Value(\"{$field}\"),\n";
+                if ($field === 'author') {
+                    $c .= "    \"{$field}\" => safe_get_user(),\n";
+                } else {
+                    $c .= "    \"{$field}\" => \$f->get_Value(\"{$field}\"),\n";
+                }
             }
         }
         $c .= ");\n";
@@ -287,7 +328,9 @@ class GenerateEditor extends BaseCommand
         $c .= "\$bootstrap = service('bootstrap');\n";
         $c .= "\$f = service(\"forms\",array(\"lang\" => \"{$ucf_module}_{$ucf_component}.\"));\n";
         $c .= "//[Request]-----------------------------------------------------------------------------\n";
-        foreach ($fields as $field) $c .= "//\$f->set_ValidationRule(\"{$field}\",\"trim|required\");\n";
+        foreach ($fields as $field) {
+            $c .= "//\$f->set_ValidationRule(\"{$field}\",\"trim|required\");\n";
+        }
         $c .= COMMENT_HR_BUILD;
         $c .= "if (\$f->run_Validation()) {\n";
         $c .= "   \$c=view(\$component.'\\processor',\$parent->get_Array());\n";
@@ -345,7 +388,7 @@ class GenerateEditor extends BaseCommand
 
     protected function copyright(string $path): string
     {
-        $date = date("Y-m-d H:i:s");
+        $date = date('Y-m-d H:i:s');
         $c  = "\n/**\n* █ -------------------------------------------------\n";
         $c .= "* █ ░FRAMEWORK                    {$date}\n";
         $c .= "* █ [{$path}]\n";

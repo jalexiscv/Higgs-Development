@@ -1,6 +1,6 @@
 <?php
 
-$eid = explode("_", $oid);
+$eid = explode('_', $oid);
 if (count($eid) < 2) {
     throw new \InvalidArgumentException("OID must be module_component format: {$oid}");
 }
@@ -24,5 +24,5 @@ $g->namespaced = $g->has_options
 $g->mkdir = APPPATH . "Modules/{$g->ucf_module}/Language/es";
 $g->pathfile = APPPATH . "Modules/{$g->ucf_module}/Language/es/_{$g->ucf_module}_{$g->ucf_component}.php";
 
-$db = \Config\Database::connect("default");
+$db = \Config\Database::connect('default');
 $g->fields = $db->getFieldNames($oid);

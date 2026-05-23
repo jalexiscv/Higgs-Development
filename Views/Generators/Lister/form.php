@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @var string $oid Cadena de objeto recibido generalmente objeto/dato a visualizar trasferido desde el ModuleController
  * @var string $view Cadena que se pasa a la vista definida en viewer para su evaluación
@@ -13,9 +14,9 @@
  * @var object $bootstrap el servicio de diseño desde el ModuleController
  **/
 //[vars]----------------------------------------------------------------------------------------------------------------
-$f = service("forms", array("lang" => "Development_Tools."));
+$f = service('forms', ['lang' => 'Development_Tools.']);
 //[coder]---------------------------------------------------------------------------------------------------------------
-$eid = explode("_", $oid);
+$eid = explode('_', $oid);
 $ucf_module = safe_ucfirst($eid[0]);
 $ucf_component = safe_ucfirst(@$eid[1]);
 $ucf_options = safe_ucfirst(@$eid[2]);
@@ -30,28 +31,27 @@ $cgrid = view($component . '\coders\grid', $data);
 $cbreadcrumb = view($component . '\coders\breadcrumb', $data);
 $code = $cindex . $cdeny . $cgrid . $cbreadcrumb;
 //[requests]------------------------------------------------------------------------------------------------------------
-$r["uri_save"] = $f->get_Value("uri_save", $pathfiles);
-$r["code"] = $f->get_Value("code", $code);
-$r["date"] = $f->get_Value("date", service("dates")::get_Date());
-$r["time"] = $f->get_Value("time", service("dates")::get_Time());
+$r['uri_save'] = $f->get_Value('uri_save', $pathfiles);
+$r['code'] = $f->get_Value('code', $code);
+$r['date'] = $f->get_Value('date', service('dates')::get_Date());
+$r['time'] = $f->get_Value('time', service('dates')::get_Time());
 //[fields]--------------------------------------------------------------------------------------------------------------
-$f->add_HiddenField("pathfiles", $pathfiles);
-$f->add_HiddenField("cindex", urlencode($cindex));
-$f->add_HiddenField("cdeny", urlencode($cdeny));
-$f->add_HiddenField("cgrid", urlencode($cgrid));
-$f->add_HiddenField("cbreadcrumb", urlencode($cbreadcrumb));
-$f->fields["uri_save"] = $f->get_FieldText("uri_save", array("value" => $r["uri_save"], "readonly" => true));
-$f->fields["code"] = $f->get_FieldCode("code", array("value" => $r["code"], "mode" => "php"));
-$f->fields["cancel"] = $f->get_Cancel("cancel", array("href" => "/nexus/generators/", "text" => lang("App.Cancel")));
-$f->fields["submit"] = $f->get_Submit("submit", array("value" => lang("App.Save")));
+$f->add_HiddenField('pathfiles', $pathfiles);
+$f->add_HiddenField('cindex', urlencode($cindex));
+$f->add_HiddenField('cdeny', urlencode($cdeny));
+$f->add_HiddenField('cgrid', urlencode($cgrid));
+$f->add_HiddenField('cbreadcrumb', urlencode($cbreadcrumb));
+$f->fields['uri_save'] = $f->get_FieldText('uri_save', ['value' => $r['uri_save'], 'readonly' => true]);
+$f->fields['code'] = $f->get_FieldCode('code', ['value' => $r['code'], 'mode' => 'php']);
+$f->fields['cancel'] = $f->get_Cancel('cancel', ['href' => '/nexus/generators/', 'text' => lang('App.Cancel')]);
+$f->fields['submit'] = $f->get_Submit('submit', ['value' => lang('App.Save')]);
 //[groups]--------------------------------------------------------------------------------------------------------------
-$f->groups["g1"] = $f->get_Group(array("legend" => "", "fields" => ($f->fields["uri_save"])));
-$f->groups["g2"] = $f->get_Group(array("legend" => "", "fields" => ($f->fields["code"])));
+$f->groups['g1'] = $f->get_Group(['legend' => '', 'fields' => ($f->fields['uri_save'])]);
+$f->groups['g2'] = $f->get_Group(['legend' => '', 'fields' => ($f->fields['code'])]);
 //[buttons]-------------------------------------------------------------------------------------------------------------
-$f->groups["gy"] = $f->get_GroupSeparator();
-$f->groups["gz"] = $f->get_Buttons(array("fields" => $f->fields["submit"] . $f->fields["cancel"]));
+$f->groups['gy'] = $f->get_GroupSeparator();
+$f->groups['gz'] = $f->get_Buttons(['fields' => $f->fields['submit'] . $f->fields['cancel']]);
 //[build]---------------------------------------------------------------------------------------------------------------
-$bootstrap = service("bootstrap");
-$card = $bootstrap->get_Card("card-view-service", array("title" => lang("Development_Tools.generators-lister"), "header-back" => "", "content" => $f,));
+$bootstrap = service('bootstrap');
+$card = $bootstrap->get_Card('card-view-service', ['title' => lang('Development_Tools.generators-lister'), 'header-back' => '', 'content' => $f, ]);
 echo($card);
-?>

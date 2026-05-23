@@ -3,26 +3,26 @@
 use Higgs\Frontend\Bootstrap\v5_3_3\Bootstrap as BS5;
 use Higgs\Html\Html;
 
-$continue = "/cadastre";
+$continue = '/cadastre';
 
 if ($authentication->get_LoggedIn()) {
-    $headerTitle = lang("App.Access-denied-title");
-    $bodyText    = lang("App.Access-denied-message");
+    $headerTitle = lang('App.Access-denied-title');
+    $bodyText    = lang('App.Access-denied-message');
 } else {
-    $headerTitle = lang("App.login-required-title");
-    $bodyText    = lang("App.login-required-message");
+    $headerTitle = lang('App.login-required-title');
+    $bodyText    = lang('App.login-required-message');
 }
 
 // Botones del footer — renderizados a string para pasarlos como contenido de texto
 $loginBtn    = (string) BS5::button([
-    'content'    => lang("App.Login"),
+    'content'    => lang('App.Login'),
     'variant'    => 'primary',
     'size'       => 'sm',
     'attributes' => ['href' => '/signin'],
 ])->render();
 
 $continueBtn = (string) BS5::button([
-    'content'    => lang("App.Go-back"),
+    'content'    => lang('App.Go-back'),
     'variant'    => 'secondary',
     'size'       => 'sm',
     'attributes' => ['href' => $continue],

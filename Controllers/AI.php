@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\Modules\Development\Controllers;
 
 require_once(APPPATH . 'ThirdParty/Markdown/autoload.php');
@@ -45,7 +44,7 @@ class AI extends ResourceController
     // all users
     public function test(string $format, string $option, string $oid)
     {
-        header("Content-Type: text/html");
+        header('Content-Type: text/html');
         $api_key = 'AIzaSyDjARGry0lzknJqVw7DW-uUbW8a6QHtfC4';
         $url = 'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent?key=' . $api_key;
 
@@ -53,10 +52,10 @@ class AI extends ResourceController
             'contents' => [
                 [
                     'parts' => [
-                        ['text' => $oid]
-                    ]
-                ]
-            ]
+                        ['text' => $oid],
+                    ],
+                ],
+            ],
         ];
 
         $ch = curl_init($url);
@@ -64,7 +63,7 @@ class AI extends ResourceController
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
-            'Content-Type: application/json'
+            'Content-Type: application/json',
         ]);
 
         $response = curl_exec($ch);
@@ -81,13 +80,12 @@ class AI extends ResourceController
                 echo $parser->transform($response);
                 echo('</div>');
             } else {
-                echo "No se pudo obtener una respuesta válida.";
+                echo 'No se pudo obtener una respuesta válida.';
             }
         }
 
         curl_close($ch);
 
     }
-
 
 }

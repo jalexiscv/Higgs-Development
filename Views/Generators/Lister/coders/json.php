@@ -5,7 +5,7 @@ include __DIR__ . '/_shared.php';
 $fields = $g->fields;
 
 $code = "<?php\n";
-$code .= get_development_code_copyright(array("path" => $g->namespaced . "json.php"));
+$code .= get_development_code_copyright(['path' => $g->namespaced . 'json.php']);
 $code .= "//[Inherited from ModuleController]---------------------------------------------------\n";
 $code .= "// \$authentication  → service('authentication')  App\\Libraries\\Authentication\n";
 $code .= "// \$bootstrap       → service('bootstrap')\n";
@@ -35,16 +35,16 @@ $code .= "\$data = array();\n";
 $code .= "\$component = '/{$g->slc_module}/{$g->slc_component}';\n";
 $code .= "foreach (\$list as \$item) {\n";
 $code .= "\t//[Buttons]---------------------------------------------------------------------------------------------------------\n";
-$code .= "\t\$viewer = \"{\$component}/view/{\$item[\"{$fields["0"]}\"]}\";\n";
-$code .= "\t\$editor = \"{\$component}/edit/{\$item[\"{$fields["0"]}\"]}\";\n";
-$code .= "\t\$deleter = \"{\$component}/delete/{\$item[\"{$fields["0"]}\"]}\";\n";
+$code .= "\t\$viewer = \"{\$component}/view/{\$item[\"{$fields['0']}\"]}\";\n";
+$code .= "\t\$editor = \"{\$component}/edit/{\$item[\"{$fields['0']}\"]}\";\n";
+$code .= "\t\$deleter = \"{\$component}/delete/{\$item[\"{$fields['0']}\"]}\";\n";
 $code .= "\t\$lviewer = \$bootstrap::get_Link('view', array('href' => \$viewer, 'icon' => ICON_VIEW, 'text' => lang(\"App.View\"), 'class' => 'btn-primary'));\n";
 $code .= "\t\$leditor = \$bootstrap::get_Link('edit', array('href' => \$editor, 'icon' => ICON_EDIT, 'text' => lang(\"App.Edit\"), 'class' => 'btn-secondary'));\n";
 $code .= "\t\$ldeleter = \$bootstrap::get_Link('delete', array('href' => \$deleter, 'icon' =>ICON_DELETE, 'text' => lang(\"App.Delete\"), 'class' => 'btn-danger'));\n";
 $code .= "\t\$options = \$bootstrap::get_BtnGroup('options', array('content'=>array(\$lviewer, \$leditor, \$ldeleter)));\n";
 $code .= "\t//[Fields]----------------------------------------------------------------------------------------------------------\n";
 foreach ($fields as $field) {
-    if (($field == "title") || ($field == "description")) {
+    if (($field == 'title') || ($field == 'description')) {
         $code .= "\t\$row[\"{$field}\"] =\$strings->get_URLDecode(\$item[\"{$field}\"]);\n";
     } else {
         $code .= "\t\$row[\"{$field}\"] =\$item[\"{$field}\"];\n";

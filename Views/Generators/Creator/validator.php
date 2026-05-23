@@ -38,18 +38,18 @@
  * -----------------------------------------------------------------------------
  */
 
-$f = service("forms", array("lang" => "Nexus."));
+$f = service('forms', ['lang' => 'Nexus.']);
 /*
  * -----------------------------------------------------------------------------
  * [Request]
  * -----------------------------------------------------------------------------
 */
-$f->set_ValidationRule("pathfiles", "trim|required");
-$f->set_ValidationRule("cindex", "trim|required");
-$f->set_ValidationRule("cdeny", "trim|required");
-$f->set_ValidationRule("cform", "trim|required");
-$f->set_ValidationRule("cprocessor", "trim|required");
-$f->set_ValidationRule("cvalidator", "trim|required");
+$f->set_ValidationRule('pathfiles', 'trim|required');
+$f->set_ValidationRule('cindex', 'trim|required');
+$f->set_ValidationRule('cdeny', 'trim|required');
+$f->set_ValidationRule('cform', 'trim|required');
+$f->set_ValidationRule('cprocessor', 'trim|required');
+$f->set_ValidationRule('cvalidator', 'trim|required');
 
 /*
  * -----------------------------------------------------------------------------
@@ -59,15 +59,15 @@ $f->set_ValidationRule("cvalidator", "trim|required");
 if ($f->run_Validation()) {
     $c = view($component . '\processor', $parent->get_Array());
 } else {
-    $c = $bootstrap->get_Card('validator', array(
+    $c = $bootstrap->get_Card('validator', [
         'class' => 'card-danger',
         'icon' => 'fa-duotone fa-triangle-exclamation',
         'text-class' => 'text-center',
-        'text' => lang("App.create-errors-message"),
+        'text' => lang('App.create-errors-message'),
         'errors' => $f->validation->listErrors(),
         'footer-class' => 'text-center',
-        'voice' => "app/form-errors-message.mp3",
-    ));
+        'voice' => 'app/form-errors-message.mp3',
+    ]);
 }
 /*
  * -----------------------------------------------------------------------------
@@ -75,5 +75,3 @@ if ($f->run_Validation()) {
  * -----------------------------------------------------------------------------
 */
 echo($c);
-
-?>

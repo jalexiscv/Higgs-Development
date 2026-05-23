@@ -3,7 +3,7 @@
 // Shared context for all Viewer coders — included by each coder file.
 // Provides $g with all parsed OID components, namespace paths, and table fields.
 
-$eid = explode("_", $oid);
+$eid = explode('_', $oid);
 if (count($eid) < 2) {
     throw new \InvalidArgumentException("OID must be module_component format: {$oid}");
 }
@@ -22,5 +22,5 @@ $g->namespaced = $g->has_options
     ? "App\\Modules\\{$g->ucf_module}\\Views\\{$g->ucf_component}\\{$g->ucf_options}\\Viewer\\"
     : "App\\Modules\\{$g->ucf_module}\\Views\\{$g->ucf_component}\\Viewer\\";
 
-$db = \Config\Database::connect("default");
+$db = \Config\Database::connect('default');
 $g->fields = $db->getFieldNames($oid);

@@ -3,7 +3,7 @@
 include __DIR__ . '/_shared.php';
 
 $code = "<?php\n";
-$code .= get_development_code_copyright(array("path" => $g->namespaced . "validator.php"));
+$code .= get_development_code_copyright(['path' => $g->namespaced . 'validator.php']);
 $code .= "\$bootstrap = service('bootstrap');\n";
 $code .= "\$f = service(\"forms\",array(\"lang\" => \"{$g->ucf_module}_{$g->ucf_component}.\"));\n";
 $code .= "//[Request]-----------------------------------------------------------------------------\n";

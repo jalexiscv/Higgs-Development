@@ -69,7 +69,7 @@ class GenerateLister extends BaseCommand
             'index.php'     => $this->buildIndex($ucf_module, $ucf_component, $ns_prefix, $plural),
             'grid.php'      => $this->buildGrid($ucf_module, $ucf_component, $ucf_options, $slc_module, $slc_component, $ns_prefix, $model_ns, $fields, $primary),
             'json.php'      => $this->buildJson($ucf_module, $ucf_component, $slc_module, $slc_component, $ns_prefix, $model_ns, $fields, $primary),
-            'breadcrumb.php'=> $this->buildBreadcrumb($slc_module, $slc_component, $ns_prefix),
+            'breadcrumb.php' => $this->buildBreadcrumb($slc_module, $slc_component, $ns_prefix),
             'deny.php'      => $this->buildDeny($slc_module, $slc_component, $ns_prefix),
         ];
 
@@ -271,7 +271,7 @@ class GenerateLister extends BaseCommand
         $c .= "    ['label' => '{$slc_module}', 'href' => '/{$slc_module}/'],\n";
         $c .= "    ['label' => lang('App.{$slc_component}'), 'href' => '/{$slc_module}/{$slc_component}/home/'.lpk(), 'active' => true],\n";
         $c .= "]]);\n";
-        $c .= "?>";
+        $c .= '?>';
         return $c;
     }
 
@@ -296,7 +296,7 @@ class GenerateLister extends BaseCommand
         $c .= "    \$card = BS5::card(['headerTitle' => lang('App.login-required-title'), 'headerClass' => 'bg-danger text-white', 'content' => \$_content, 'attributes' => ['class' => 'border-danger shadow-sm']]);\n";
         $c .= "}\n";
         $c .= "echo(\$card);\n";
-        $c .= "?>";
+        $c .= '?>';
         return $c;
     }
 

@@ -23,7 +23,7 @@ class Router extends Controller
     public function route($controller, $method)
     {
         // Convierte los nombres de la URL a la convención de nombres de las clases y los métodos
-        $module = "Development";
+        $module = 'Development';
         $controller = ucfirst($controller);
         $method = strtolower($method);
         // Construye el nombre de clase completo con su espacio de nombres
@@ -31,7 +31,7 @@ class Router extends Controller
         // Verifica si la clase y el método existen
         if (class_exists($class) && method_exists($class, $method)) {
             // Si existen, crea una nueva instancia de la clase
-            $instance = new $class;
+            $instance = new $class();
             // Obtiene los argumentos adicionales
             $args = array_slice(func_get_args(), 2);
             // Llama al método con los argumentos
@@ -42,5 +42,3 @@ class Router extends Controller
         }
     }
 }
-
-?>

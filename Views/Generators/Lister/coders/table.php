@@ -5,8 +5,7 @@ include __DIR__ . '/_shared.php';
 $fields = $g->fields;
 
 $code = "<?php\n";
-$code .= get_development_code_copyright(array("path" => $g->namespaced . "table.php"));
-
+$code .= get_development_code_copyright(['path' => $g->namespaced . 'table.php']);
 
 $code .= "\n";
 $code .= COMMENT_HR_SERVICES;

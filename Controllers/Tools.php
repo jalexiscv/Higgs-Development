@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright (c) 2021-2023. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
  * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
@@ -13,8 +14,6 @@ use App\Controllers\ModuleController;
 
 class Tools extends ModuleController
 {
-
-
     public function __construct()
     {
         parent::__construct();
@@ -30,7 +29,6 @@ class Tools extends ModuleController
         $url = base_url('development/tools/home/' . lpk());
         return (redirect()->to($url));
     }
-
 
     public function home(string $rnd)
     {
@@ -72,7 +70,4 @@ class Tools extends ModuleController
         return (view($this->viewer, $this->get_Array()));
     }
 
-
 }
-
-?>

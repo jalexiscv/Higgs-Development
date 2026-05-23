@@ -1,4 +1,5 @@
 <?php
+
 /*
  * **
  *  ** █ ---------------------------------------------------------------------------------------------------------------------
@@ -27,7 +28,7 @@
  *  **
  */
 
-$code = "";
+$code = '';
 $code .= "/**\n";
 $code .= "\t\t * Este método verifica si la tabla especificada existe en la base de datos utilizando la función tableExists()\n";
 $code .= "\t\t * del objeto db de Higgs. Además, utiliza la caché para almacenar el resultado de la verificación para mejorar\n";
@@ -46,4 +47,3 @@ $code .= "\t\t\t\t}\n";
 $code .= "\t\t\t\treturn \$data;\n";
 $code .= "\t\t}\n";
 echo($code);
-?>

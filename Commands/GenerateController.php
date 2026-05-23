@@ -164,7 +164,7 @@ class GenerateController extends BaseCommand
         $c .= "\n";
 
         $c .= "}\n";
-        $c .= "?>";
+        $c .= '?>';
         return $c;
     }
 

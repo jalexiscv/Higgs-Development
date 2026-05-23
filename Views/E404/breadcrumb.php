@@ -25,9 +25,8 @@
  * █ @authentication, @request, @dates, @parent, @component, @view, @oid, @views, @prefix
  * █ ---------------------------------------------------------------------------------------------------------------------
  **/
-$b = service("bootstrap");
-$menu = array(
-    array("href" => "/security/", "text" => "Security", "class" => "active"),
-);
+$b = service('bootstrap');
+$menu = [
+    ['href' => '/security/', 'text' => 'Security', 'class' => 'active'],
+];
 echo($b->get_Breadcrumb($menu));
-?>

@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright (c) 2021-2021. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
  * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
@@ -13,8 +14,6 @@ use App\Controllers\ModuleController;
 
 class Generators extends ModuleController
 {
-
-
     public function __construct()
     {
         parent::__construct();
@@ -30,7 +29,6 @@ class Generators extends ModuleController
         $url = base_url('development/generators/home/' . lpk());
         return (redirect()->to($url));
     }
-
 
     public function home(string $rnd)
     {
@@ -50,7 +48,6 @@ class Generators extends ModuleController
         return (view($this->viewer, $this->get_Array()));
     }
 
-
     /**
      * Permite generar un modelo de conexion a una tabla en la base de datos
      * @param string $oid
@@ -63,7 +60,6 @@ class Generators extends ModuleController
         $this->component = $this->views . '\Generators\Model';
         return (view($this->viewer, $this->get_Array()));
     }
-
 
     /**
      * Permite generar un controlador
@@ -103,7 +99,6 @@ class Generators extends ModuleController
         $this->component = $this->views . '\Generators\Creator';
         return (view($this->viewer, $this->get_Array()));
     }
-
 
     /**
      * Permite generar un viewer
@@ -170,7 +165,4 @@ class Generators extends ModuleController
         return (view($this->viewer, $this->get_Array()));
     }
 
-
 }
-
-?>

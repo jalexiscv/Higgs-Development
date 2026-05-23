@@ -4,7 +4,7 @@ include __DIR__ . '/_shared.php';
 
 $namespacedFile = $g->namespaced;
 
-$code = "";
+$code = '';
 $code .= "<?php\n";
 $code .= "\n";
 $code .= "namespace App\\Modules\\{$g->ucf_module}\\Models;\n";
@@ -58,12 +58,12 @@ $code .= "\t\t protected \$DBGroup = \"authentication\";//default\n";
 $code .= "\t\t protected \$version = '1.0.1';\n";
 $code .= "\t\t protected \$cache_time = 60;\n";
 $code .= "\t\t protected array \$cacheTags = ['table:{$oid}'];\n";
-$code .= view($component . '\Methods\__construct', array());
-$code .= view($component . '\Methods\exec_Migrate', array('module' => $g->ucf_module));
-$code .= view($component . '\Methods\getAuthority', array());
-$code .= view($component . '\Methods\getList', array("primary" => $g->fields[0], "fields" => $g->fields));
-$code .= view($component . '\Methods\getSelectData', array());
-$code .= view($component . '\Methods\get_Row', array("primary" => $g->fields[0]));
+$code .= view($component . '\Methods\__construct', []);
+$code .= view($component . '\Methods\exec_Migrate', ['module' => $g->ucf_module]);
+$code .= view($component . '\Methods\getAuthority', []);
+$code .= view($component . '\Methods\getList', ['primary' => $g->fields[0], 'fields' => $g->fields]);
+$code .= view($component . '\Methods\getSelectData', []);
+$code .= view($component . '\Methods\get_Row', ['primary' => $g->fields[0]]);
 $code .= "}\n";
 $code .= "\n";
 $code .= "?>\n";

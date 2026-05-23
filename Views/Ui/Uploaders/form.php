@@ -41,16 +41,16 @@ $bootstrap = service('Bootstrap');
 $dates = service('Dates');
 $strings = service('strings');
 $authentication = service('authentication');
-$back = "/development/ui/home/" . lpk();
+$back = '/development/ui/home/' . lpk();
 //[Request]-----------------------------------------------------------------------------
-$code = "En Higgs, los botones son elementos interactivos que se usan para iniciar acciones específicas. Por defecto ofrecemos estilos predefinidos para los botones, que se pueden personalizar fácilmente con clases adicionales.";
+$code = 'En Higgs, los botones son elementos interactivos que se usan para iniciar acciones específicas. Por defecto ofrecemos estilos predefinidos para los botones, que se pueden personalizar fácilmente con clases adicionales.';
 //[build]---------------------------------------------------------------------------------------------------------------
-$bootstrap = service("bootstrap");
-$card = $bootstrap->get_Card("card-view-service", array(
-    "title" => lang("App.Buttons"),
-    "header-back" => $back,
-    "content" => $code,
-));
+$bootstrap = service('bootstrap');
+$card = $bootstrap->get_Card('card-view-service', [
+    'title' => lang('App.Buttons'),
+    'header-back' => $back,
+    'content' => $code,
+]);
 echo($card);
 ?>
 <div class="container">

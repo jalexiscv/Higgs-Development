@@ -1,4 +1,5 @@
 <?php
+
 /*
  * **
  *  ** █ ---------------------------------------------------------------------------------------------------------------------
@@ -27,7 +28,7 @@
  *  **
  */
 /** @var string $module */
-$strings = service("strings");
+$strings = service('strings');
 $ucf_module = $strings->get_Ucfirst($module);
 $lc_module = $strings->get_Strtolower($module);
 
@@ -84,4 +85,3 @@ $code .= "\$template = view(\"App\Views\Themes\Higgs\index\", \$assign);\n";
 $code .= "echo(\$template);\n";
 $code .= "?>\n";
 echo $code;
-?>

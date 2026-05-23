@@ -1,4 +1,5 @@
 <?php
+
 /*
  * **
  *  ** █ ---------------------------------------------------------------------------------------------------------------------
@@ -27,11 +28,11 @@
  *  **
  */
 // @$primary Recibe el campo clave primaria
-$strings = service("strings");
+$strings = service('strings');
 /** @var string $primary */
 $name = $strings->get_Strtolower($primary);
 $ucfname = $strings->get_Ucfirst($name);
-$code = "";
+$code = '';
 $code .= "\t\t /**\n";
 $code .= "\t\t * Obtiene la clave de caché para un identificador dado.\n";
 $code .= "\t\t * @param \$product\n";
@@ -47,4 +48,3 @@ $code .= "\t\t\t\t\t\treturn (false);\n";
 $code .= "\t\t\t\t}\n";
 $code .= "\t\t}\n";
 echo($code);
-?>

@@ -1,23 +1,20 @@
 <?php
 
-$b = service("bootstrap");
+$b = service('bootstrap');
 
-
-$f = service("forms", array("lang" => "Development.texttophp-"));
-
+$f = service('forms', ['lang' => 'Development.texttophp-']);
 
 $model = model("App\Modules\Plex\Models\Plex_Modules");
-$d = array(
-    "text" => $f->get_Value("text"),
-);
+$d = [
+    'text' => $f->get_Value('text'),
+];
 
-$lineas = explode("\n", $d["text"]);
+$lineas = explode("\n", $d['text']);
 
-
-$content = "";
+$content = '';
 $content .= "<?php\n";
 foreach ($lineas as $linea) {
-    $linea = str_replace("  ", '\t', $linea);
+    $linea = str_replace('  ', '\t', $linea);
     $linea = trim($linea);
     $linea = str_replace('\'', '\\\'', $linea);
     $linea = str_replace('$', '\$', $linea);
@@ -26,18 +23,16 @@ foreach ($lineas as $linea) {
     $linea = str_replace("\\'", "'", $linea);
     $content .= "\$code.=\"{$linea}\\n\";\n";
 }
-$content .= "?>";
+$content .= '?>';
 
+$l['back'] = '/development/tools/home/' . lpk();
+$r['code'] = $content;
+$f->fields['code'] = $f->get_FieldCode('code', ['value' => $r['code'], 'mode' => 'php']);
+$f->groups['g2'] = $f->get_Group(['legend' => '', 'fields' => ($f->fields['code'])]);
 
-$l["back"] = "/development/tools/home/" . lpk();
-$r["code"] = $content;
-$f->fields["code"] = $f->get_FieldCode("code", array("value" => $r["code"], "mode" => "php"));
-$f->groups["g2"] = $f->get_Group(array("legend" => "", "fields" => ($f->fields["code"])));
-
-$card = $b->get_Card("card-view-service", array(
-    "title" => "PHP",
-    "header-back" => $l["back"],
-    "content" => $f,
-));
+$card = $b->get_Card('card-view-service', [
+    'title' => 'PHP',
+    'header-back' => $l['back'],
+    'content' => $f,
+]);
 echo($card);
-?>

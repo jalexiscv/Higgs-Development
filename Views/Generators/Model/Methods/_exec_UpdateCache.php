@@ -1,5 +1,6 @@
 <?php
-$code = "";
+
+$code = '';
 $code .= "/**\n";
 $code .= "* Implementa la lógica para actualizar la caché después de insertar o actualizar\n";
 $code .= "* Por ejemplo, puedes utilizar la misma lógica que en exec_beforeFind\n";
@@ -19,4 +20,3 @@ $code .= "}\n";
 $code .= "}\n";
 $code .= "}\n";
 echo($code);
-?>

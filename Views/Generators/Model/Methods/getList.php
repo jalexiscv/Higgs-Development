@@ -1,4 +1,5 @@
 <?php
+
 /*
  * **
  *  ** █ ---------------------------------------------------------------------------------------------------------------------
@@ -28,7 +29,7 @@
  */
 /** @var string $primary */
 /** @var array $fields */
-$code = "";
+$code = '';
 $code .= "\t\t /**\n";
 $code .= "\t\t * Obtiene una lista de registros con un rango especificado y opcionalmente filtrados por un término de búsqueda.\n";
 $code .= "\t\t * con opciones de filtrado y paginación.\n";
@@ -43,7 +44,7 @@ $code .= "\t\t\t\t\$result = \$this\n";
 $code .= "\t\t\t\t\t\t->groupStart()\n";
 $code .= "\t\t\t\t\t\t->like(\"{$primary}\", \"%{\$search}%\")\n";
 foreach ($fields as $field) {
-    if ($field != $primary && $field != "created_at" && $field != "updated_at" && $field != "deleted_at") {
+    if ($field != $primary && $field != 'created_at' && $field != 'updated_at' && $field != 'deleted_at') {
         $code .= "\t\t\t\t\t\t->orLike(\"{$field}\", \"%{\$search}%\")\n";
     }
 }
@@ -57,4 +58,3 @@ $code .= "\t\t\t\t\t\treturn false;\n";
 $code .= "\t\t\t\t}\n";
 $code .= "\t\t}\n";
 echo($code);
-?>

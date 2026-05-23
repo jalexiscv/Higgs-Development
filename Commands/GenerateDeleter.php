@@ -66,7 +66,7 @@ class GenerateDeleter extends BaseCommand
             'form.php'      => $this->buildForm($ucf_module, $ucf_component, $sucf_component, $slc_module, $slc_component, $ns_prefix),
             'processor.php' => $this->buildProcessor($ucf_module, $ucf_component, $slc_module, $slc_component, $ns_prefix),
             'validator.php' => $this->buildValidator($ucf_module, $ucf_component, $ns_prefix),
-            'breadcrumb.php'=> $this->buildBreadcrumb($slc_module, $slc_component, $ns_prefix),
+            'breadcrumb.php' => $this->buildBreadcrumb($slc_module, $slc_component, $ns_prefix),
             'deny.php'      => $this->buildDeny($slc_module, $slc_component, $ns_prefix),
         ];
 
@@ -262,7 +262,7 @@ class GenerateDeleter extends BaseCommand
         $c .= "    ['label' => '{$slc_module}', 'href' => '/{$slc_module}/'],\n";
         $c .= "    ['label' => lang('App.{$slc_component}'), 'href' => '/{$slc_module}/{$slc_component}/home/'.lpk(), 'active' => true],\n";
         $c .= "]]);\n";
-        $c .= "?>";
+        $c .= '?>';
         return $c;
     }
 
@@ -287,7 +287,7 @@ class GenerateDeleter extends BaseCommand
         $c .= "    \$card = BS5::card(['headerTitle' => lang('App.login-required-title'), 'headerClass' => 'bg-danger text-white', 'content' => \$_content, 'attributes' => ['class' => 'border-danger shadow-sm']]);\n";
         $c .= "}\n";
         $c .= "echo(\$card);\n";
-        $c .= "?>";
+        $c .= '?>';
         return $c;
     }
 

@@ -1,6 +1,7 @@
 <?php
+
 /** @var string $module */
-$code = "";
+$code = '';
 $code .= "\t\t /**\n";
 $code .= "\t\t * Ejecuta las migraciones para el módulo actual.\n";
 $code .= "\t\t * @return void\n";
@@ -17,4 +18,3 @@ $code .= "\t\t\t\t\t\techo(\$e->getMessage());\n";
 $code .= "\t\t\t\t}\n";
 $code .= "\t\t}\n";
 echo($code);
-?>

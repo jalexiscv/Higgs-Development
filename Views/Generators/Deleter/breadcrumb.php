@@ -25,9 +25,8 @@
  * █ @authentication, @request, @dates, @parent, @component, @view, @oid, @views, @prefix
  * █ ---------------------------------------------------------------------------------------------------------------------
  **/
-$b = service("bootstrap");
-$menu = array(
-    array("href" => "/development/home/" . lpk(), "text" => "Development", "class" => false),
-);
+$b = service('bootstrap');
+$menu = [
+    ['href' => '/development/home/' . lpk(), 'text' => 'Development', 'class' => false],
+];
 echo($b->get_Breadcrumb($menu));
-?>

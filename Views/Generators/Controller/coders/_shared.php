@@ -1,6 +1,6 @@
 <?php
 
-$eid = explode("_", $oid);
+$eid = explode('_', $oid);
 if (count($eid) < 2) {
     throw new \InvalidArgumentException("OID must be module_component format: {$oid}");
 }
@@ -19,4 +19,3 @@ $g->classname = "{$g->ucf_module}_{$g->ucf_component}";
 $g->namespaced = "App\\Modules\\{$g->ucf_module}\\Controllers\\_{$g->ucf_component}.php";
 $g->mkdir = APPPATH . "Modules/{$g->ucf_module}/Controllers";
 $g->pathfile = APPPATH . "Modules/{$g->ucf_module}/Controllers/_{$g->ucf_component}.php";
-

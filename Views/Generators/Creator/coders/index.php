@@ -4,17 +4,17 @@ include __DIR__ . '/_shared.php';
 
 $singular = "{$g->slc_module}-{$g->slc_component}-create";
 if ($g->has_options) {
-    $namespacedFile = $g->namespaced . "index.php";
+    $namespacedFile = $g->namespaced . 'index.php';
     $path = '/' . $g->slc_module . '/' . $g->slc_component . '/' . $g->slc_options;
     $ajax = "/{$g->slc_module}/{$g->slc_component}/{$g->slc_options}/ajax/list?time=\".time()";
 } else {
-    $namespacedFile = $g->namespaced . "index.php";
+    $namespacedFile = $g->namespaced . 'index.php';
     $path = '/' . $g->slc_module . '/' . $g->slc_component;
     $ajax = "/{$g->slc_module}/{$g->slc_component}/ajax/list/";
 }
 
 $code = "<?php\n";
-$code .= get_development_code_copyright(array("path" => $namespacedFile));
+$code .= get_development_code_copyright(['path' => $namespacedFile]);
 $code .= COMMENT_HR_VARS;
 $code .= COMMENT_MODULECONTROLER_VARS;
 $code .= "\$data = \$parent->get_Array();\n";

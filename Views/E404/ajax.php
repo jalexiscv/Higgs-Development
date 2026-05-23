@@ -1,4 +1,4 @@
 <?php
-echo("AJAX NO DEFINIDO");
+
+echo('AJAX NO DEFINIDO');
 echo("<br>VIEW: {$view}");
-?>

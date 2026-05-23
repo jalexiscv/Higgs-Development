@@ -35,10 +35,9 @@
  * █ @var object $model Modelo de datos utilizado en la vista y trasferido desde el index
  * █ ---------------------------------------------------------------------------------------------------------------------
  **/
-$bootstrap = service("bootstrap");
-$menu = array(
-    array("href" => "/development/", "text" => lang("App.Development"), "class" => false),
-    array("href" => "/development/ui/home/" . lpk(), "text" => lang("App.UI"), "class" => "active"),
-);
+$bootstrap = service('bootstrap');
+$menu = [
+    ['href' => '/development/', 'text' => lang('App.Development'), 'class' => false],
+    ['href' => '/development/ui/home/' . lpk(), 'text' => lang('App.UI'), 'class' => 'active'],
+];
 echo($bootstrap->get_Breadcrumb($menu));
-?>

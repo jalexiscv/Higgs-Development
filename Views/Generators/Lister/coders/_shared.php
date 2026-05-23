@@ -3,7 +3,7 @@
 // Shared context for all Lister coders — included by each coder file.
 // Provides $g with all parsed OID components, namespace paths, and table fields.
 
-$eid = explode("_", $oid);
+$eid = explode('_', $oid);
 if (count($eid) < 2) {
     throw new \InvalidArgumentException("OID must be module_component format: {$oid}");
 }
@@ -28,5 +28,5 @@ $g->model = $g->has_options
 
 $g->plural = "{$g->slc_module}-{$g->slc_component}-view-all";
 
-$db = \Config\Database::connect("default");
+$db = \Config\Database::connect('default');
 $g->fields = $db->getFieldNames($oid);

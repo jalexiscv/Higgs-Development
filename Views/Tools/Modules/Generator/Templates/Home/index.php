@@ -1,10 +1,11 @@
 <?php
+
 /** @var string $module */
-$strings = service("strings");
+$strings = service('strings');
 $ucf_module = $strings->get_Ucfirst($module);
 $lc_module = $strings->get_Strtolower($module);
-$time = date("Y-m-d H:i:s");
-$year = date("Y");
+$time = date('Y-m-d H:i:s');
+$year = date('Y');
 
 $code = "<?php\n";
 $code .= "\n";
@@ -57,4 +58,3 @@ $code .= ");\n";
 $code .= "echo(json_encode(\$json));\n";
 $code .= "?>\n";
 echo($code);
-?>

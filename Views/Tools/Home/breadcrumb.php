@@ -25,10 +25,9 @@
  * █ @authentication, @request, @dates, @parent, @component, @view, @oid, @views, @prefix
  * █ ---------------------------------------------------------------------------------------------------------------------
  **/
-$b = service("bootstrap");
-$menu = array(
-    array("href" => "/development/", "text" => "Development", "class" => false),
-    array("href" => "/development/tools/home/" . lpk(), "text" => lang("App.Tools"), "class" => "active"),
-);
+$b = service('bootstrap');
+$menu = [
+    ['href' => '/development/', 'text' => 'Development', 'class' => false],
+    ['href' => '/development/tools/home/' . lpk(), 'text' => lang('App.Tools'), 'class' => 'active'],
+];
 echo($b->get_Breadcrumb($menu));
-?>

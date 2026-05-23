@@ -38,9 +38,14 @@ class GenerateCreator extends BaseCommand
         $force    = false;
 
         foreach ($_SERVER['argv'] ?? [] as $arg) {
-            if (!is_string($arg)) continue;
-            if (strpos($arg, '--database=') === 0) $database = trim(substr($arg, 11), '"\'');
-            elseif ($arg === '--force') $force = true;
+            if (!is_string($arg)) {
+                continue;
+            }
+            if (strpos($arg, '--database=') === 0) {
+                $database = trim(substr($arg, 11), '"\'');
+            } elseif ($arg === '--force') {
+                $force = true;
+            }
         }
 
         if (empty($table)) {
@@ -90,7 +95,9 @@ class GenerateCreator extends BaseCommand
         CLI::write('Campos: ' . implode(', ', $fields), 'white');
         CLI::newLine();
 
-        if (!is_dir($pathfiles)) mkdir($pathfiles, 0755, true);
+        if (!is_dir($pathfiles)) {
+            mkdir($pathfiles, 0755, true);
+        }
 
         $files = [
             'index.php'      => $this->buildIndex($ucf_module, $ucf_component, $ucf_options, $slc_module, $slc_component, $slc_options, $singular, $is_triple),
@@ -105,7 +112,10 @@ class GenerateCreator extends BaseCommand
             $filepath = "{$pathfiles}/{$filename}";
             if (file_exists($filepath) && !$force) {
                 $answer = CLI::prompt("  '{$filename}' ya existe. ¿Sobreescribir?", ['y', 'n']);
-                if ($answer !== 'y') { CLI::write("  → Saltando {$filename}", 'yellow'); continue; }
+                if ($answer !== 'y') {
+                    CLI::write("  → Saltando {$filename}", 'yellow');
+                    continue;
+                }
             }
             file_put_contents($filepath, $content);
             CLI::write("  ✓ {$filename}", 'green');
@@ -118,9 +128,14 @@ class GenerateCreator extends BaseCommand
     }
 
     protected function buildIndex(
-        string $ucf_module, string $ucf_component, ?string $ucf_options,
-        string $slc_module, string $slc_component, ?string $slc_options,
-        string $singular, bool $is_triple
+        string $ucf_module,
+        string $ucf_component,
+        ?string $ucf_options,
+        string $slc_module,
+        string $slc_component,
+        ?string $slc_options,
+        string $singular,
+        bool $is_triple
     ): string {
         $namespaced = $is_triple
             ? "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\Create\\index.php"
@@ -169,9 +184,14 @@ class GenerateCreator extends BaseCommand
     }
 
     protected function buildForm(
-        string $ucf_module, string $ucf_component, ?string $ucf_options,
-        string $slc_module, string $slc_component, ?string $slc_options,
-        array $fields, bool $is_triple
+        string $ucf_module,
+        string $ucf_component,
+        ?string $ucf_options,
+        string $slc_module,
+        string $slc_component,
+        ?string $slc_options,
+        array $fields,
+        bool $is_triple
     ): string {
         $namespaced = $is_triple
             ? "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\Create\\form.php"
@@ -215,12 +235,12 @@ class GenerateCreator extends BaseCommand
         $c .= "\$f->fields[\"submit\"] =\$f->get_Submit(\"submit\", array(\"value\" =>lang(\"App.Create\"),\"proportion\" =>\"col-xl-6 col-lg-6 col-md-6 col-sm-12 col-12 padding-left\"));\n";
         $c .= COMMENT_HR_GROUPS;
         $skipped = ['author', 'created_at', 'updated_at', 'deleted_at'];
-        $visible  = array_values(array_filter($fields, fn($f) => !in_array($f, $skipped)));
+        $visible  = array_values(array_filter($fields, fn ($f) => !in_array($f, $skipped)));
         $chunks   = array_chunk($visible, 3);
         $grupo = 0;
         foreach ($chunks as $chunk) {
             $grupo++;
-            $fields_code = implode('.', array_map(fn($f) => "\$f->fields[\"{$f}\"]", $chunk));
+            $fields_code = implode('.', array_map(fn ($f) => "\$f->fields[\"{$f}\"]", $chunk));
             $c .= "\$f->groups[\"g{$grupo}\"]=\$f->get_Group(array(\"legend\"=>\"\",\"fields\"=>({$fields_code})));\n";
         }
         $c .= COMMENT_HR_BUTTONS;
@@ -238,9 +258,14 @@ class GenerateCreator extends BaseCommand
     }
 
     protected function buildProcessor(
-        string $ucf_module, string $ucf_component, ?string $ucf_options,
-        string $slc_module, string $slc_component, ?string $slc_options,
-        array $fields, bool $is_triple
+        string $ucf_module,
+        string $ucf_component,
+        ?string $ucf_options,
+        string $slc_module,
+        string $slc_component,
+        ?string $slc_options,
+        array $fields,
+        bool $is_triple
     ): string {
         $namespaced = $is_triple
             ? "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\Create\\processor.php"
@@ -258,10 +283,15 @@ class GenerateCreator extends BaseCommand
         $c .= "\$d = array(\n";
         foreach ($fields as $field) {
             if (!in_array($field, ['created_at', 'updated_at', 'deleted_at'])) {
-                if ($field === 'author') $c .= "    \"{$field}\" => safe_get_user(),\n";
-                elseif ($field === 'date') $c .= "    \"{$field}\" => safe_get_date(),\n";
-                elseif ($field === 'time') $c .= "    \"{$field}\" => safe_get_time(),\n";
-                else $c .= "    \"{$field}\" => \$f->get_Value(\"{$field}\"),\n";
+                if ($field === 'author') {
+                    $c .= "    \"{$field}\" => safe_get_user(),\n";
+                } elseif ($field === 'date') {
+                    $c .= "    \"{$field}\" => safe_get_date(),\n";
+                } elseif ($field === 'time') {
+                    $c .= "    \"{$field}\" => safe_get_time(),\n";
+                } else {
+                    $c .= "    \"{$field}\" => \$f->get_Value(\"{$field}\"),\n";
+                }
             }
         }
         $c .= ");\n";
@@ -290,8 +320,11 @@ class GenerateCreator extends BaseCommand
     }
 
     protected function buildValidator(
-        string $ucf_module, string $ucf_component, ?string $ucf_options,
-        array $fields, bool $is_triple
+        string $ucf_module,
+        string $ucf_component,
+        ?string $ucf_options,
+        array $fields,
+        bool $is_triple
     ): string {
         $namespaced = $is_triple
             ? "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\Create\\validator.php"
@@ -323,8 +356,12 @@ class GenerateCreator extends BaseCommand
     }
 
     protected function buildBreadcrumb(
-        string $ucf_module, string $ucf_component, ?string $ucf_options,
-        string $slc_module, string $slc_component, bool $is_triple
+        string $ucf_module,
+        string $ucf_component,
+        ?string $ucf_options,
+        string $slc_module,
+        string $slc_component,
+        bool $is_triple
     ): string {
         $namespaced = $is_triple
             ? "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\Create\\breadcrumb.php"
@@ -336,13 +373,17 @@ class GenerateCreator extends BaseCommand
         $c .= "    ['label' => '{$slc_module}', 'href' => '/{$slc_module}/'],\n";
         $c .= "    ['label' => lang('App.{$slc_component}'), 'href' => '/{$slc_module}/{$slc_component}/home/'.lpk(), 'active' => true],\n";
         $c .= "]]);\n";
-        $c .= "?>";
+        $c .= '?>';
         return $c;
     }
 
     protected function buildDeny(
-        string $ucf_module, string $ucf_component, ?string $ucf_options,
-        string $slc_module, string $slc_component, bool $is_triple
+        string $ucf_module,
+        string $ucf_component,
+        ?string $ucf_options,
+        string $slc_module,
+        string $slc_component,
+        bool $is_triple
     ): string {
         $namespaced = $is_triple
             ? "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\Create\\deny.php"
@@ -365,13 +406,13 @@ class GenerateCreator extends BaseCommand
         $c .= "    \$card = BS5::card(['headerTitle' => lang('App.login-required-title'), 'headerClass' => 'bg-danger text-white', 'content' => \$_content, 'attributes' => ['class' => 'border-danger shadow-sm']]);\n";
         $c .= "}\n";
         $c .= "echo(\$card);\n";
-        $c .= "?>";
+        $c .= '?>';
         return $c;
     }
 
     protected function copyright(string $path): string
     {
-        $date = date("Y-m-d H:i:s");
+        $date = date('Y-m-d H:i:s');
         $c  = "\n/**\n* █ -------------------------------------------------\n";
         $c .= "* █ ░FRAMEWORK                    {$date}\n";
         $c .= "* █ [{$path}]\n";

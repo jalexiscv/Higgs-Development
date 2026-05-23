@@ -170,9 +170,15 @@ class GenerateViewer extends BaseCommand
     // ─────────────────────────────────────────────────────────────────────────
 
     protected function buildIndex(
-        string $ucf_module, string $ucf_component, ?string $ucf_options,
-        string $slc_module, string $slc_component, ?string $slc_options,
-        string $singular, string $plural, bool $is_triple
+        string $ucf_module,
+        string $ucf_component,
+        ?string $ucf_options,
+        string $slc_module,
+        string $slc_component,
+        ?string $slc_options,
+        string $singular,
+        string $plural,
+        bool $is_triple
     ): string {
         $namespaced = $is_triple
             ? "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\View\\index.php"
@@ -210,9 +216,15 @@ class GenerateViewer extends BaseCommand
     }
 
     protected function buildForm(
-        string $ucf_module, string $ucf_component, ?string $ucf_options,
-        string $slc_module, string $slc_component, ?string $slc_options,
-        string $sucf_component, array $fields, bool $is_triple
+        string $ucf_module,
+        string $ucf_component,
+        ?string $ucf_options,
+        string $slc_module,
+        string $slc_component,
+        ?string $slc_options,
+        string $sucf_component,
+        array $fields,
+        bool $is_triple
     ): string {
         $namespaced = $is_triple
             ? "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\View\\form.php"
@@ -252,12 +264,12 @@ class GenerateViewer extends BaseCommand
 
         // chunk visible fields in groups of 3
         $skipped = ['author', 'created_at', 'updated_at', 'deleted_at'];
-        $visible  = array_values(array_filter($fields, fn($f) => !in_array($f, $skipped)));
+        $visible  = array_values(array_filter($fields, fn ($f) => !in_array($f, $skipped)));
         $chunks   = array_chunk($visible, 3);
         $grupo    = 0;
         foreach ($chunks as $chunk) {
             $grupo++;
-            $fields_code = implode('.', array_map(fn($f) => "\$f->fields[\"{$f}\"]", $chunk));
+            $fields_code = implode('.', array_map(fn ($f) => "\$f->fields[\"{$f}\"]", $chunk));
             $c .= "\$f->groups[\"g{$grupo}\"]=\$f->get_Group(array(\"legend\"=>\"\",\"fields\"=>({$fields_code})));\n";
         }
 
@@ -276,9 +288,14 @@ class GenerateViewer extends BaseCommand
     }
 
     protected function buildProcessor(
-        string $ucf_module, string $ucf_component, ?string $ucf_options,
-        string $slc_module, string $slc_component, ?string $slc_options,
-        array $fields, bool $is_triple
+        string $ucf_module,
+        string $ucf_component,
+        ?string $ucf_options,
+        string $slc_module,
+        string $slc_component,
+        ?string $slc_options,
+        array $fields,
+        bool $is_triple
     ): string {
         $namespaced = $is_triple
             ? "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\View\\processor.php"
@@ -341,8 +358,11 @@ class GenerateViewer extends BaseCommand
     }
 
     protected function buildValidator(
-        string $ucf_module, string $ucf_component, ?string $ucf_options,
-        array $fields, bool $is_triple
+        string $ucf_module,
+        string $ucf_component,
+        ?string $ucf_options,
+        array $fields,
+        bool $is_triple
     ): string {
         $namespaced = $is_triple
             ? "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\View\\validator.php"
@@ -378,8 +398,12 @@ class GenerateViewer extends BaseCommand
     }
 
     protected function buildBreadcrumb(
-        string $ucf_module, string $ucf_component, ?string $ucf_options,
-        string $slc_module, string $slc_component, bool $is_triple
+        string $ucf_module,
+        string $ucf_component,
+        ?string $ucf_options,
+        string $slc_module,
+        string $slc_component,
+        bool $is_triple
     ): string {
         $namespaced = $is_triple
             ? "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\View\\breadcrumb.php"
@@ -392,13 +416,17 @@ class GenerateViewer extends BaseCommand
         $c .= "    ['label' => '{$slc_module}', 'href' => '/{$slc_module}/'],\n";
         $c .= "    ['label' => lang('App.{$slc_component}'), 'href' => '/{$slc_module}/{$slc_component}/home/'.lpk(), 'active' => true],\n";
         $c .= "]]);\n";
-        $c .= "?>";
+        $c .= '?>';
         return $c;
     }
 
     protected function buildDeny(
-        string $ucf_module, string $ucf_component, ?string $ucf_options,
-        string $slc_module, string $slc_component, bool $is_triple
+        string $ucf_module,
+        string $ucf_component,
+        ?string $ucf_options,
+        string $slc_module,
+        string $slc_component,
+        bool $is_triple
     ): string {
         $namespaced = $is_triple
             ? "App\\Modules\\{$ucf_module}\\Views\\{$ucf_component}\\{$ucf_options}\\View\\deny.php"
@@ -422,7 +450,7 @@ class GenerateViewer extends BaseCommand
         $c .= "    \$card = BS5::card(['headerTitle' => lang('App.login-required-title'), 'headerClass' => 'bg-danger text-white', 'content' => \$_content, 'attributes' => ['class' => 'border-danger shadow-sm']]);\n";
         $c .= "}\n";
         $c .= "echo(\$card);\n";
-        $c .= "?>";
+        $c .= '?>';
         return $c;
     }
 
@@ -435,8 +463,8 @@ class GenerateViewer extends BaseCommand
      */
     protected function copyright(string $path): string
     {
-        $author = "Jose Alexis Correa Valencia <jalexiscv@gmail.com>";
-        $date   = date("Y-m-d H:i:s");
+        $author = 'Jose Alexis Correa Valencia <jalexiscv@gmail.com>';
+        $date   = date('Y-m-d H:i:s');
         $c  = "\n/**";
         $c .= "\n* █ ---------------------------------------------------------------------------------------------------------------------";
         $c .= "\n* █ ░FRAMEWORK                                  {$date}";

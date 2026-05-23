@@ -3,7 +3,7 @@
 include __DIR__ . '/_shared.php';
 
 $code = "<?php\n";
-$code .= get_development_code_copyright(array("path" => $g->namespaced . "index.php"));
+$code .= get_development_code_copyright(['path' => $g->namespaced . 'index.php']);
 $code .= COMMENT_HR_VARS;
 $code .= COMMENT_MODULECONTROLER_VARS;
 

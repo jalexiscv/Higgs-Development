@@ -2,11 +2,11 @@
 
 include __DIR__ . '/_shared.php';
 
-$namespacedFile = $g->namespaced . "validator.php";
+$namespacedFile = $g->namespaced . 'validator.php';
 $fields = $g->fields;
 
 $code = "<?php\n";
-$code .= get_development_code_copyright(array("path" => $namespacedFile));
+$code .= get_development_code_copyright(['path' => $namespacedFile]);
 
 $code .= "use Higgs\\Frontend\\Bootstrap\\v5_3_3\\Bootstrap as BS5;\n";
 $code .= COMMENT_HR_SERVICES;

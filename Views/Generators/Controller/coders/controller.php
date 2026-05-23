@@ -7,7 +7,7 @@ $namespacedFile = $g->namespaced;
 $code = "<?php\n";
 $code .= "\n";
 $code .= "namespace App\\Modules\\{$g->ucf_module}\\Controllers;\n";
-$code .= get_development_code_copyright(array("path" => $namespacedFile));
+$code .= get_development_code_copyright(['path' => $namespacedFile]);
 
 $code .= "\n";
 $code .= "use App\Controllers\ModuleController;\n";
@@ -103,6 +103,6 @@ $code .= "\n";
 
 $code .= "\n";
 $code .= "}\n";
-$code .= "?>";
+$code .= '?>';
 
 echo($code);

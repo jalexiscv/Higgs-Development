@@ -1,4 +1,5 @@
 <?php
+
 /*
  * **
  *  ** █ ---------------------------------------------------------------------------------------------------------------------
@@ -27,7 +28,7 @@
  *  **
  */
 
-$code = "";
+$code = '';
 $code .= "/**\n";
 $code .= "* Regenera o recrea la tabla de la base de datos en caso de que esta no exista\n";
 $code .= "* Ejemplo de campos\n";
@@ -49,12 +50,12 @@ $code .= "if (!\$this->get_TableExist()) {\n";
 $code .= "\$forge = Database::forge(\$this->DBGroup);\n";
 $code .= "\$fields = [\n";
 foreach ($datas as $field) {
-    if (($field->name != "author") && ($field->name != "created_at") && ($field->name != "updated_at") && ($field->name != "deleted_at")) {
-        if ($field->type == "int") {
+    if (($field->name != 'author') && ($field->name != 'created_at') && ($field->name != 'updated_at') && ($field->name != 'deleted_at')) {
+        if ($field->type == 'int') {
             $code .= "\t\t\t '{$field->name}' => ['type' => 'INT', 'constraint' =>10, 'null' => FALSE],\n";
-        } elseif ($field->type == "double") {
+        } elseif ($field->type == 'double') {
             $code .= "\t\t\t '{$field->name}' => ['type' => 'DOUBLE','constraint' =>'10,2','default' => 0.00, 'null' => FALSE],\n";
-        } elseif ($field->type == "varchar") {
+        } elseif ($field->type == 'varchar') {
             $code .= "\t\t\t '{$field->name}' => ['type' => 'VARCHAR','constraint' =>{$field->max_length}, 'null' => FALSE],\n";
         } else {
             $type = strtoupper($field->type);
@@ -75,4 +76,3 @@ $code .= "}\n";
 $code .= "}\n";
 $code .= "\n";
 echo($code);
-?>

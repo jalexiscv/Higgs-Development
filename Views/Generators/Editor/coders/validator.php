@@ -3,10 +3,10 @@
 include __DIR__ . '/_shared.php';
 
 $fields = $g->fields;
-$namespacedFile = $g->namespaced . "validator.php";
+$namespacedFile = $g->namespaced . 'validator.php';
 
 $code = "<?php\n";
-$code .= get_development_code_copyright(array("path" => $namespacedFile));
+$code .= get_development_code_copyright(['path' => $namespacedFile]);
 
 $code .= "use Higgs\\Frontend\\Bootstrap\\v5_3_3\\Bootstrap as BS5;\n";
 $code .= "\$f = service(\"forms\",array(\"lang\" => \"{$g->ucf_module}_{$g->ucf_component}.\"));\n";

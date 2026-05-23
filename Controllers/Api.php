@@ -34,42 +34,41 @@ class Api extends ResourceController
     // all users
     public function index()
     {
-        $data = array("message" => "Api Online!");
+        $data = ['message' => 'Api Online!'];
         return $this->respond($data);
     }
-
 
     public function customers(string $format, string $option, string $oid)
     {
         //header("Content-Type: text/json");
-        header("Content-Type: text/html");
-        $data = array(
-            "oid" => $oid
-        );
-        if ($format == "json") {
+        header('Content-Type: text/html');
+        $data = [
+            'oid' => $oid,
+        ];
+        if ($format == 'json') {
             if ($option == 'list') {
                 echo(view('App\Modules\Web\Views\Customers\List\json', $data));
             }
         } else {
-            return ($this->failNotFound(lang("App.Api-breaches-no-option")));
+            return ($this->failNotFound(lang('App.Api-breaches-no-option')));
         }
     }
 
     public function sitemaps(string $oid)
     {
         header('Content-Type: application/xml');
-        $data = array(
-            "oid" => $oid
-        );
+        $data = [
+            'oid' => $oid,
+        ];
         return (view('App\Modules\Web\Views\Sitemaps\index', $data));
     }
 
     public function bing(string $oid)
     {
         header('Content-Type: text/plain');
-        $data = array(
-            "oid" => $oid
-        );
+        $data = [
+            'oid' => $oid,
+        ];
         return (view('App\Modules\Web\Views\Sitemaps\bing', $data));
     }
 
@@ -81,16 +80,15 @@ class Api extends ResourceController
     public function generators(string $format, string $option, string $oid)
     {
         //header("Content-Type: text/json");
-        if ($format == "json") {
+        if ($format == 'json') {
             if ($option == 'list') {
                 return (view('App\Modules\Development\Views\Generators\List\json'));
             } else {
 
             }
         } else {
-            return ($this->failNotFound(lang("App.Api-Authentication-no-option")));
+            return ($this->failNotFound(lang('App.Api-Authentication-no-option')));
         }
     }
-
 
 }

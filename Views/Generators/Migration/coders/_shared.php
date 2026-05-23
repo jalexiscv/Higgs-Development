@@ -1,6 +1,6 @@
 <?php
 
-$eid = explode("_", $oid);
+$eid = explode('_', $oid);
 if (count($eid) < 2) {
     throw new \InvalidArgumentException("OID must be module_component format: {$oid}");
 }
@@ -24,5 +24,5 @@ $g->path = APPPATH . "Modules/{$g->ucf_module}/Database/Migrations/";
 $g->uri = $g->path . $g->timestamp . "_{$g->ucf_module}_{$g->ucf_component}.php";
 $g->file = "{$g->timestamp}_{$g->ucf_module}_{$g->ucf_component}.php";
 
-$db = \Config\Database::connect("default");
+$db = \Config\Database::connect('default');
 $g->fields = $db->getFieldNames($oid);

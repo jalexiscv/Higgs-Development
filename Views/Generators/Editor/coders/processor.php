@@ -3,10 +3,10 @@
 include __DIR__ . '/_shared.php';
 
 $fields = $g->fields;
-$namespacedFile = $g->namespaced . "processor.php";
+$namespacedFile = $g->namespaced . 'processor.php';
 
 $code = "<?php\n";
-$code .= get_development_code_copyright(array("path" => $namespacedFile));
+$code .= get_development_code_copyright(['path' => $namespacedFile]);
 
 $code .= "use Higgs\\Frontend\\Bootstrap\\v5_3_3\\Bootstrap as BS5;\n";
 $code .= "//[Inherited from ModuleController]---------------------------------------------------\n";
@@ -23,8 +23,8 @@ $code .= "\$model = model(\"App\\Modules\\{$g->ucf_module}\\Models\\{$g->ucf_mod
 
 $code .= "\$d = array(\n";
 foreach ($fields as $field) {
-    if ($field != "created_at" && $field != "updated_at" && $field != "deleted_at") {
-        if ($field == "author") {
+    if ($field != 'created_at' && $field != 'updated_at' && $field != 'deleted_at') {
+        if ($field == 'author') {
             $code .= "    \"{$field}\" => safe_get_user(),\n";
         } else {
             $code .= "    \"{$field}\" => \$f->get_Value(\"{$field}\"),\n";

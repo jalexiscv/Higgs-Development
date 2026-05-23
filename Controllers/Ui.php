@@ -1,4 +1,5 @@
 <?php
+
 /*
  * **
  *  ** █ ---------------------------------------------------------------------------------------------------------------------
@@ -33,8 +34,6 @@ use App\Controllers\ModuleController;
 
 class UI extends ModuleController
 {
-
-
     public function __construct()
     {
         parent::__construct();
@@ -50,7 +49,6 @@ class UI extends ModuleController
         $url = base_url('development/ui/home/' . lpk());
         return (redirect()->to($url));
     }
-
 
     public function home(string $rnd)
     {
@@ -92,7 +90,4 @@ class UI extends ModuleController
         return (view($this->viewer, $this->get_Array()));
     }
 
-
 }
-
-?>

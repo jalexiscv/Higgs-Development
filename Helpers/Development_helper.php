@@ -1,4 +1,5 @@
 <?php
+
 /*
  * Copyright (c) 2021. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
  * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
@@ -7,7 +8,7 @@
  * Vestibulum commodo. Ut rhoncus gravida arcu.
  */
 
-if (!function_exists("generate_development_permissions")) {
+if (!function_exists('generate_development_permissions')) {
 
     /**
      * Permite registrar los permisos asociados al modulo, tecnicamente su
@@ -15,40 +16,39 @@ if (!function_exists("generate_development_permissions")) {
      */
     function generate_development_permissions()
     {
-        $permissions = array(
-            "development-access",
-        );
-        generate_permissions($permissions, "cadastre");
+        $permissions = [
+            'development-access',
+        ];
+        generate_permissions($permissions, 'cadastre');
     }
 
 }
 
-if (!function_exists("get_development_sidebar")) {
+if (!function_exists('get_development_sidebar')) {
     function get_development_sidebar($active_url = false)
     {
-        $bootstrap = service("bootstrap");
+        $bootstrap = service('bootstrap');
         $lpk = safe_strtolower(pk());
-        $options = array(
-            "home" => array("text" => lang("App.Home"), "href" => "/development/", "svg" => "home.svg"),
-            "customers" => array("text" => lang("App.Customers"), "href" => "/development/customers/list/" . lpk(), "icon" => ICON_CUSTOMERS, "permission" => "development-access"),
-            "generators" => array("text" => lang("App.Generators"), "href" => "/development/generators/list/" . lpk(), "icon" => ICON_GENERATORS, "permission" => "development-access"),
-            "ui" => array("text" => lang("App.UI"), "href" => "/development/ui/home/" . lpk(), "icon" => ICON_TOOLS, "permission" => "development-access"),
-            "tools" => array("text" => lang("App.Tools"), "href" => "/development/tools/home/" . lpk(), "icon" => ICON_TOOLS, "permission" => "development-access"),
-            "ide" => array("text" => lang("App.IDE"), "href" => "/development/ide/home/" . lpk(), "icon" => ICON_TOOLS, "permission" => "development-access"),
-        );
+        $options = [
+            'home' => ['text' => lang('App.Home'), 'href' => '/development/', 'svg' => 'home.svg'],
+            'customers' => ['text' => lang('App.Customers'), 'href' => '/development/customers/list/' . lpk(), 'icon' => ICON_CUSTOMERS, 'permission' => 'development-access'],
+            'generators' => ['text' => lang('App.Generators'), 'href' => '/development/generators/list/' . lpk(), 'icon' => ICON_GENERATORS, 'permission' => 'development-access'],
+            'ui' => ['text' => lang('App.UI'), 'href' => '/development/ui/home/' . lpk(), 'icon' => ICON_TOOLS, 'permission' => 'development-access'],
+            'tools' => ['text' => lang('App.Tools'), 'href' => '/development/tools/home/' . lpk(), 'icon' => ICON_TOOLS, 'permission' => 'development-access'],
+            'ide' => ['text' => lang('App.IDE'), 'href' => '/development/ide/home/' . lpk(), 'icon' => ICON_TOOLS, 'permission' => 'development-access'],
+        ];
         $o = get_application_custom_sidebar($options, $active_url);
         $return = $bootstrap->get_NavPillsGamma($o, $active_url);
         return ($return);
     }
 }
 
-
-if (!function_exists("get_development_code_copyright")) {
+if (!function_exists('get_development_code_copyright')) {
     function get_development_code_copyright(array $args)
     {
-        $path = $args["path"];
-        $author = "Jose Alexis Correa Valencia <jalexiscv@gmail.com>";
-        $date = date("Y-m-d H:i:s");
+        $path = $args['path'];
+        $author = 'Jose Alexis Correa Valencia <jalexiscv@gmail.com>';
+        $date = date('Y-m-d H:i:s');
         $c = "\n/**";
         $c .= "\n* █ ---------------------------------------------------------------------------------------------------------------------";
         $c .= "\n* █ ░FRAMEWORK                                  {$date}";
@@ -73,6 +73,3 @@ if (!function_exists("get_development_code_copyright")) {
         return ($c);
     }
 }
-
-
-?>

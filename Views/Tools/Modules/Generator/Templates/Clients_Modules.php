@@ -1,4 +1,5 @@
 <?php
+
 /*
  * **
  *  ** █ ---------------------------------------------------------------------------------------------------------------------
@@ -27,7 +28,7 @@
  *  **
  */
 
-$strings = service("strings");
+$strings = service('strings');
 /** @var string $module */
 $ucf_module = $strings->get_Ucfirst($module);
 $lc_module = $strings->get_Strtolower($module);
@@ -47,4 +48,3 @@ $code .= "\n";
 $code .= "\n";
 $code .= "?>\n";
 echo($code);
-?>

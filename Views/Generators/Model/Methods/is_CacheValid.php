@@ -1,4 +1,5 @@
 <?php
+
 /*
  * **
  *  ** █ ---------------------------------------------------------------------------------------------------------------------
@@ -27,7 +28,7 @@
  *  **
  */
 
-$code = "";
+$code = '';
 $code .= "/**\n";
 $code .= "\t\t * Método is_CacheValid\n";
 $code .= "\t\t * Este método verifica si los datos recuperados de la caché son válidos.\n";
@@ -39,4 +40,3 @@ $code .= "\t\t{\n";
 $code .= "\t\t\t\treturn is_array(\$cache) && array_key_exists('retrieved', \$cache) && \$cache['retrieved'] === true;\n";
 $code .= "\t\t}\n";
 echo($code);
-?>

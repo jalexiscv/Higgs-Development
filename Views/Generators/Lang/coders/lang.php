@@ -5,7 +5,7 @@ include __DIR__ . '/_shared.php';
 $namespacedFile = $g->namespaced;
 
 $code = "<?php\n";
-$code .= get_development_code_copyright(array("path" => $namespacedFile));
+$code .= get_development_code_copyright(['path' => $namespacedFile]);
 $code .= "return [\n";
 $code .= "\t// - {$g->ucf_component} fields \n";
 foreach ($g->fields as $field) {

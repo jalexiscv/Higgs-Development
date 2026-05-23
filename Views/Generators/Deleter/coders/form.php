@@ -2,11 +2,11 @@
 
 include __DIR__ . '/_shared.php';
 
-$strings = service("strings");
+$strings = service('strings');
 $sucf_component = $strings->removePluralEnding($g->ucf_component);
 
 $code = "<?php\n";
-$code .= get_development_code_copyright(array("path" => $g->namespaced . "form.php"));
+$code .= get_development_code_copyright(['path' => $g->namespaced . 'form.php']);
 $code .= "use Higgs\\Frontend\\Bootstrap\\v5_3_3\\Bootstrap as BS5;\n";
 $code .= "//[Inherited from ModuleController]---------------------------------------------------\n";
 $code .= "// \$authentication  → service('authentication')  App\\Libraries\\Authentication\n";

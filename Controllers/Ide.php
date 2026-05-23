@@ -1,4 +1,5 @@
 <?php
+
 /*
  * **
  *  ** █ ---------------------------------------------------------------------------------------------------------------------
@@ -33,8 +34,6 @@ use App\Controllers\ModuleController;
 
 class Ide extends ModuleController
 {
-
-
     public function __construct()
     {
         parent::__construct();
@@ -51,7 +50,6 @@ class Ide extends ModuleController
         return (redirect()->to($url));
     }
 
-
     public function home(string $rnd)
     {
         $this->oid = $rnd;
@@ -60,7 +58,4 @@ class Ide extends ModuleController
         return (view($this->viewer, $this->get_Array()));
     }
 
-
 }
-
-?>

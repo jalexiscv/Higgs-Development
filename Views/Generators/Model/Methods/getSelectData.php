@@ -1,4 +1,5 @@
 <?php
+
 /*
  * **
  *  ** █ ---------------------------------------------------------------------------------------------------------------------
@@ -27,7 +28,7 @@
  *  **
  */
 
-$code = "";
+$code = '';
 $code .= "\t\t /**\n";
 $code .= "\t\t * Retorna el listado de elementos existentes de forma que se pueda cargar un field tipo select.\n";
 $code .= "\t\t * Ejemplo de uso:\n";
@@ -45,4 +46,3 @@ $code .= "\t\t\t\t\t return (false);\n";
 $code .= "\t\t\t\t }\n";
 $code .= "\t\t }\n";
 echo($code);
-?>

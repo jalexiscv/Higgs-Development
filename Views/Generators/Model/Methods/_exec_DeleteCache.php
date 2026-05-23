@@ -1,5 +1,6 @@
 <?php
-$code = "";
+
+$code = '';
 $code .= "/**\n";
 $code .= "* Implementa la lógica para eliminar la caché después de eliminar\n";
 $code .= "* Por ejemplo, puedes utilizar la misma lógica que en exec_beforeFind\n";
@@ -18,4 +19,3 @@ $code .= "}\n";
 $code .= "}\n";
 $code .= "}\n";
 echo($code);
-?>
